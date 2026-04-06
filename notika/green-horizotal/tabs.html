@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="en" data-page-module="tabs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tabs | Notika - Modern Vite Template</title>
+    <meta name="description" content="Modern Notika Admin Template powered by Vite 7.1.5">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/logo/notika-icon.svg">
+    <link rel="alternate icon" href="/favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Mobile Menu CSS -->
+    <link rel="stylesheet" href="css/mobile-menu.css">
+
+    <!-- Font Awesome and all other CSS imported via Vite -->
+    <!-- ONLY Vite entry point - everything else bundled -->
+</head>
+
+<body>
+    <!-- Modern Bootstrap 5 Header -->
+    <header class="notika-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Logo Section -->
+                <div class="col-lg-4 col-6">
+                    <div class="notika-brand">
+                        <a href="index.html">
+                            <!-- Desktop Logo (768px and up) -->
+                            <img src="/logo/notika-logo-horizontal.svg" alt="Notika" class="d-none d-md-block" style="height: 40px;">
+                            <!-- Mobile Logo (below 768px) -->
+                            <img src="/logo/notika-icon.svg" alt="Notika" class="d-md-none" style="height: 35px; width: 35px;">
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Navigation Section -->
+                <div class="col-lg-8 col-6">
+                    <div class="notika-nav justify-content-end d-flex align-items-center gap-2 gap-lg-3">
+                        
+                        <!-- Search -->
+                        <div class="dropdown">
+                            <button class="notika-nav-link" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end notika-dropdown search-dropdown">
+                                <div class="search-input-group">
+                                    <input type="text" placeholder="Search anything..." class="form-control">
+                                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Messages -->
+                        <div class="dropdown">
+                            <button class="notika-nav-link position-relative" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span class="notika-badge">5</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end notika-dropdown">
+                                <div class="notika-dropdown-header">
+                                    Messages
+                                </div>
+                                <div class="notika-dropdown-body">
+                                    <a class="notika-dropdown-item" href="view-email.html">
+                                        <img src="/post/1.jpg" alt="User">
+                                        <div class="notika-dropdown-content">
+                                            <h6>David Belle</h6>
+                                            <p>Hey! How's the project going? Need any help?</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="view-email.html">
+                                        <img src="/post/2.jpg" alt="User">
+                                        <div class="notika-dropdown-content">
+                                            <h6>Sarah Wilson</h6>
+                                            <p>The new design looks amazing!</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="view-email.html">
+                                        <img src="/post/4.jpg" alt="User">
+                                        <div class="notika-dropdown-content">
+                                            <h6>Mike Johnson</h6>
+                                            <p>Thanks for the quick dashboard fix!</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="notika-dropdown-footer">
+                                    <a href="inbox.html">View All Messages</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Notifications -->
+                        <div class="dropdown">
+                            <button class="notika-nav-link position-relative" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-bell"></i>
+                                <span class="notika-badge">3</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end notika-dropdown">
+                                <div class="notika-dropdown-header">
+                                    Notifications
+                                </div>
+                                <div class="notika-dropdown-body">
+                                    <a class="notika-dropdown-item" href="notification.html">
+                                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; margin-right: 12px;">
+                                            <i class="fa-solid fa-circle-check" style="font-size: 14px;"></i>
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>Task Completed</h6>
+                                            <p>Bootstrap 5 migration completed successfully.</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="notification.html">
+                                        <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; margin-right: 12px;">
+                                            <i class="fa-solid fa-bell" style="font-size: 14px;"></i>
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>Server Alert</h6>
+                                            <p>Response time higher than usual.</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="notification.html">
+                                        <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; margin-right: 12px;">
+                                            <i class="fa-solid fa-message" style="font-size: 14px;"></i>
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>New Message</h6>
+                                            <p>You have 2 unread messages.</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="notika-dropdown-footer">
+                                    <a href="notification.html">View All Notifications</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tasks - Desktop Only -->
+                        <div class="dropdown d-none d-lg-block">
+                            <button class="notika-nav-link position-relative" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-list-check"></i>
+                                <span class="notika-badge">2</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end notika-dropdown" style="min-width: 280px;">
+                                <div class="notika-dropdown-header">
+                                    Active Tasks
+                                </div>
+                                <div class="notika-dropdown-body">
+                                    <div class="task-item px-3">
+                                        <div class="task-title">Website Redesign</div>
+                                        <div class="task-progress">
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 85%"></div>
+                                            </div>
+                                            <small class="text-muted">85% Complete</small>
+                                        </div>
+                                    </div>
+                                    <div class="task-item px-3">
+                                        <div class="task-title">API Integration</div>
+                                        <div class="task-progress">
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 65%"></div>
+                                            </div>
+                                            <small class="text-muted">65% Complete</small>
+                                        </div>
+                                    </div>
+                                    <div class="task-item px-3">
+                                        <div class="task-title">Database Optimization</div>
+                                        <div class="task-progress">
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 95%"></div>
+                                            </div>
+                                            <small class="text-muted">95% Complete</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="notika-dropdown-footer">
+                                    <a href="widgets.html">View All Tasks</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Chat -->
+                        <div class="dropdown">
+                            <button class="notika-nav-link" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-message"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end notika-dropdown">
+                                <div class="notika-dropdown-header">
+                                    Team Chat
+                                </div>
+                                <div class="notika-dropdown-body">
+                                    <a class="notika-dropdown-item" href="compose-email.html">
+                                        <div style="position: relative;">
+                                            <img src="/post/1.jpg" alt="User">
+                                            <div class="chat-status"></div>
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>John Doe</h6>
+                                            <p>Online - Available</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="compose-email.html">
+                                        <div style="position: relative;">
+                                            <img src="/post/2.jpg" alt="User">
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>Sarah Smith</h6>
+                                            <p>Last seen 2 hours ago</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="compose-email.html">
+                                        <div style="position: relative;">
+                                            <img src="/post/4.jpg" alt="User">
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>Mike Johnson</h6>
+                                            <p>Away - Back in 10 min</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="notika-dropdown-footer">
+                                    <a href="compose-email.html">Open Chat</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Menu Toggle -->
+                        <button class="notika-nav-link d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNavOffcanvas" aria-controls="mobileNavOffcanvas">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End Modern Header -->
+
+    <!-- Desktop Navigation -->
+    <nav class="navbar navbar-expand-lg notika-navbar d-none d-lg-block">
+        <div class="container">
+            <div class="navbar-collapse">
+                <ul class="navbar-nav w-100 justify-content-center">
+
+                    <!-- Home Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="index.html">Dashboard One</a></li>
+                            <li><a class="dropdown-item" href="index-2.html">Dashboard Two</a></li>
+                            <li><a class="dropdown-item" href="index-3.html">Dashboard Three</a></li>
+                            <li><a class="dropdown-item" href="index-4.html">Dashboard Four</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="analytics.html">Analytics</a></li>
+                            <li><a class="dropdown-item" href="widgets.html">Widgets</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Email Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>Email</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="inbox.html">Inbox</a></li>
+                            <li><a class="dropdown-item" href="view-email.html">View Email</a></li>
+                            <li><a class="dropdown-item" href="compose-email.html">Compose Email</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Interface Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <span>Interface</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="animations.html">Animations</a></li>
+                            <li><a class="dropdown-item" href="google-map.html">Google Map</a></li>
+                            <li><a class="dropdown-item" href="data-map.html">Data Maps</a></li>
+                            <li><a class="dropdown-item" href="code-editor.html">Code Editor</a></li>
+                            <li><a class="dropdown-item" href="image-cropper.html">Images Cropper</a></li>
+                            <li><a class="dropdown-item" href="wizard.html">Wizard</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Charts Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-chart-column"></i>
+                            <span>Charts</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="flot-charts.html">Flot Charts</a></li>
+                            <li><a class="dropdown-item" href="bar-charts.html">Bar Charts</a></li>
+                            <li><a class="dropdown-item" href="line-charts.html">Line Charts</a></li>
+                            <li><a class="dropdown-item" href="area-charts.html">Area Charts</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Tables Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-table-columns"></i>
+                            <span>Tables</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="normal-table.html">Normal Table</a></li>
+                            <li><a class="dropdown-item" href="data-table.html">Data Table</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Forms Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <span>Forms</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="form-elements.html">Form Elements</a></li>
+                            <li><a class="dropdown-item" href="form-components.html">Form Components</a></li>
+                            <li><a class="dropdown-item" href="form-examples.html">Form Examples</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Components Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-cube"></i>
+                            <span>Components</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="notification.html">Notifications</a></li>
+                            <li><a class="dropdown-item" href="alert.html">Alerts</a></li>
+                            <li><a class="dropdown-item" href="modals.html">Modals</a></li>
+                            <li><a class="dropdown-item" href="buttons.html">Buttons</a></li>
+                            <li><a class="dropdown-item" href="tabs.html">Tabs</a></li>
+                            <li><a class="dropdown-item" href="accordion.html">Accordion</a></li>
+                            <li><a class="dropdown-item" href="dialog.html">Dialogs</a></li>
+                            <li><a class="dropdown-item" href="popovers.html">Popovers</a></li>
+                            <li><a class="dropdown-item" href="tooltips.html">Tooltips</a></li>
+                            <li><a class="dropdown-item" href="dropdown.html">Dropdowns</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Pages Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis"></i>
+                            <span>Pages</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="contact.html">Contact</a></li>
+                            <li><a class="dropdown-item" href="invoice.html">Invoice</a></li>
+                            <li><a class="dropdown-item" href="typography.html">Typography</a></li>
+                            <li><a class="dropdown-item" href="color.html">Color</a></li>
+                            <li><a class="dropdown-item" href="login-register.html">Login Register</a></li>
+                            <li><a class="dropdown-item" href="404.html">404 Page</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Desktop Navigation -->
+
+    <!-- Mobile Offcanvas Navigation -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileNavOffcanvas" aria-labelledby="mobileNavOffcanvasLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="mobileNavOffcanvasLabel">
+                <img src="/logo/notika-logo-horizontal.svg" alt="Notika" style="height: 30px;">
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <!-- Mobile Menu List -->
+            <nav class="navbar-nav flex-column">
+
+                <!-- Home Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileHomeMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-house me-2"></i> Home</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileHomeMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="index.html">Dashboard One</a>
+                            <a class="nav-link py-1" href="index-2.html">Dashboard Two</a>
+                            <a class="nav-link py-1" href="index-3.html">Dashboard Three</a>
+                            <a class="nav-link py-1" href="index-4.html">Dashboard Four</a>
+                            <a class="nav-link py-1" href="analytics.html">Analytics</a>
+                            <a class="nav-link py-1" href="widgets.html">Widgets</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileEmailMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-envelope me-2"></i> Email</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileEmailMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="inbox.html">Inbox</a>
+                            <a class="nav-link py-1" href="view-email.html">View Email</a>
+                            <a class="nav-link py-1" href="compose-email.html">Compose Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interface Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileInterfaceMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-pen-to-square me-2"></i> Interface</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileInterfaceMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="animations.html">Animations</a>
+                            <a class="nav-link py-1" href="google-map.html">Google Map</a>
+                            <a class="nav-link py-1" href="data-map.html">Data Maps</a>
+                            <a class="nav-link py-1" href="code-editor.html">Code Editor</a>
+                            <a class="nav-link py-1" href="image-cropper.html">Images Cropper</a>
+                            <a class="nav-link py-1" href="wizard.html">Wizard</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileChartsMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-chart-column me-2"></i> Charts</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileChartsMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="flot-charts.html">Flot Charts</a>
+                            <a class="nav-link py-1" href="bar-charts.html">Bar Charts</a>
+                            <a class="nav-link py-1" href="line-charts.html">Line Charts</a>
+                            <a class="nav-link py-1" href="area-charts.html">Area Charts</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tables Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileTablesMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-table-columns me-2"></i> Tables</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileTablesMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="normal-table.html">Normal Table</a>
+                            <a class="nav-link py-1" href="data-table.html">Data Table</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Forms Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileFormsMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-file-lines me-2"></i> Forms</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileFormsMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="form-elements.html">Form Elements</a>
+                            <a class="nav-link py-1" href="form-components.html">Form Components</a>
+                            <a class="nav-link py-1" href="form-examples.html">Form Examples</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Components Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileComponentsMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-cube me-2"></i> Components</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileComponentsMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="notification.html">Notifications</a>
+                            <a class="nav-link py-1" href="alert.html">Alerts</a>
+                            <a class="nav-link py-1" href="modals.html">Modals</a>
+                            <a class="nav-link py-1" href="buttons.html">Buttons</a>
+                            <a class="nav-link py-1" href="tabs.html">Tabs</a>
+                            <a class="nav-link py-1" href="accordion.html">Accordion</a>
+                            <a class="nav-link py-1" href="dialog.html">Dialogs</a>
+                            <a class="nav-link py-1" href="popovers.html">Popovers</a>
+                            <a class="nav-link py-1" href="tooltips.html">Tooltips</a>
+                            <a class="nav-link py-1" href="dropdown.html">Dropdowns</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pages Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobilePagesMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-ellipsis me-2"></i> Pages</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobilePagesMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="contact.html">Contact</a>
+                            <a class="nav-link py-1" href="invoice.html">Invoice</a>
+                            <a class="nav-link py-1" href="typography.html">Typography</a>
+                            <a class="nav-link py-1" href="color.html">Color</a>
+                            <a class="nav-link py-1" href="login-register.html">Login Register</a>
+                            <a class="nav-link py-1" href="404.html">404 Page</a>
+                        </div>
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+    </div>
+    <!-- End Mobile Offcanvas Navigation -->
+
+    <!-- Breadcomb area Start-->
+    <div class="breadcomb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="breadcomb-list">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="fa-solid fa-cube"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Tabs</h2>
+                                        <p>Welcome to Notika <span class="bread-ntd">Admin Template</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-3">
+                                <div class="breadcomb-report">
+                                    <button data-bs-toggle="tooltip" data-bs-placement="left" title="Download Report" class="btn"><i class="fa-solid fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcomb area End-->
+
+    <!-- Tabs Content Area Start -->
+    <div class="tabs-info-area mg-b-15">
+        <div class="container">
+
+            <!-- Row 1: Basic Tabs + Pills Tabs -->
+            <div class="row pt-3">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="recent-post-wrapper notika-shadow">
+                        <div class="recent-post-ctn">
+                            <div class="recent-post-title">
+                                <h2>Basic Tabs</h2>
+                                <p>Standard horizontal tabs using <code>.nav-tabs</code> for switching between content panes.</p>
+                            </div>
+                        </div>
+                        <div class="recent-post-items">
+                            <ul class="nav nav-tabs" id="basicTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="basic-profile-tab" data-bs-toggle="tab" data-bs-target="#basic-profile" type="button" role="tab" aria-controls="basic-profile" aria-selected="true">Profile</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="basic-settings-tab" data-bs-toggle="tab" data-bs-target="#basic-settings" type="button" role="tab" aria-controls="basic-settings" aria-selected="false">Settings</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="basic-activity-tab" data-bs-toggle="tab" data-bs-target="#basic-activity" type="button" role="tab" aria-controls="basic-activity" aria-selected="false">Activity</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="basicTabsContent">
+                                <div class="tab-pane fade show active" id="basic-profile" role="tabpanel" aria-labelledby="basic-profile-tab">
+                                    <div class="tab-ctn">
+                                        <p>Manage your personal profile information including your name, email address, and contact preferences. Keep your details up to date to ensure seamless communication across the platform.</p>
+                                        <p class="tab-mg-b-0">Your profile is visible to team members and administrators. You can control visibility settings from the privacy section in your account preferences.</p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="basic-settings" role="tabpanel" aria-labelledby="basic-settings-tab">
+                                    <div class="tab-ctn">
+                                        <p>Configure your account settings including notification preferences, language options, and display themes. Changes are applied immediately and synced across all your devices.</p>
+                                        <p class="tab-mg-b-0">For security settings such as two-factor authentication and password changes, visit the dedicated Security page from your account menu.</p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="basic-activity" role="tabpanel" aria-labelledby="basic-activity-tab">
+                                    <div class="tab-ctn">
+                                        <p>View your recent activity log including login history, file changes, and system interactions. Activity records are retained for 90 days and can be exported in CSV format.</p>
+                                        <p class="tab-mg-b-0">Unusual activity will be flagged automatically. If you notice any unauthorized access, contact your system administrator immediately.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="recent-post-wrapper notika-shadow">
+                        <div class="recent-post-ctn">
+                            <div class="recent-post-title">
+                                <h2>Pills Tabs</h2>
+                                <p>Rounded pill-style navigation using <code>.nav-pills</code> for a softer, modern look.</p>
+                            </div>
+                        </div>
+                        <div class="recent-post-items">
+                            <ul class="nav nav-pills" id="pillsTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="pills-overview-tab" data-bs-toggle="pill" data-bs-target="#pills-overview" type="button" role="tab" aria-controls="pills-overview" aria-selected="true">Overview</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-reports-tab" data-bs-toggle="pill" data-bs-target="#pills-reports" type="button" role="tab" aria-controls="pills-reports" aria-selected="false">Reports</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-analytics-tab" data-bs-toggle="pill" data-bs-target="#pills-analytics" type="button" role="tab" aria-controls="pills-analytics" aria-selected="false">Analytics</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="pillsTabsContent">
+                                <div class="tab-pane fade show active" id="pills-overview" role="tabpanel" aria-labelledby="pills-overview-tab">
+                                    <div class="tab-ctn">
+                                        <p>Dashboard overview shows key performance indicators at a glance. Monitor real-time metrics including active users, server uptime, and revenue trends all from one centralized view.</p>
+                                        <p class="tab-mg-b-0">Widgets can be customized and rearranged to match your preferred workflow. Drag and drop to reorder, or use the settings panel to toggle visibility.</p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-reports" role="tabpanel" aria-labelledby="pills-reports-tab">
+                                    <div class="tab-ctn">
+                                        <p>Generate and schedule detailed reports covering user engagement, financial summaries, and operational metrics. Reports can be exported as PDF, Excel, or shared via email.</p>
+                                        <p class="tab-mg-b-0">Automated reports run weekly and monthly. Configure custom report schedules from the Reports Configuration page.</p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-analytics" role="tabpanel" aria-labelledby="pills-analytics-tab">
+                                    <div class="tab-ctn">
+                                        <p>Deep-dive analytics with interactive charts and data visualizations. Filter by date range, user segments, or custom dimensions to uncover actionable insights.</p>
+                                        <p class="tab-mg-b-0">Analytics data refreshes every 15 minutes. Historical data is available for the past 12 months with full export capabilities.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2: Icon Tabs + Justified Tabs -->
+            <div class="row mt-4">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="recent-post-wrapper notika-shadow">
+                        <div class="recent-post-ctn">
+                            <div class="recent-post-title">
+                                <h2>Tabs with Icons</h2>
+                                <p>Enhance tab labels with Font Awesome icons for better visual identification.</p>
+                            </div>
+                        </div>
+                        <div class="recent-post-items">
+                            <ul class="nav nav-tabs" id="iconTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="icon-home-tab" data-bs-toggle="tab" data-bs-target="#icon-home" type="button" role="tab" aria-controls="icon-home" aria-selected="true"><i class="fa-solid fa-house me-1"></i> Home</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="icon-user-tab" data-bs-toggle="tab" data-bs-target="#icon-user" type="button" role="tab" aria-controls="icon-user" aria-selected="false"><i class="fa-solid fa-user me-1"></i> Users</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="icon-gear-tab" data-bs-toggle="tab" data-bs-target="#icon-gear" type="button" role="tab" aria-controls="icon-gear" aria-selected="false"><i class="fa-solid fa-gear me-1"></i> Config</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="iconTabsContent">
+                                <div class="tab-pane fade show active" id="icon-home" role="tabpanel" aria-labelledby="icon-home-tab">
+                                    <div class="tab-ctn">
+                                        <p>Your home dashboard displays a personalized summary of tasks, notifications, and recent updates. Quick-access shortcuts let you jump to frequently used sections.</p>
+                                        <p class="tab-mg-b-0">The home view adapts based on your role and recent activity patterns for a tailored experience.</p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="icon-user" role="tabpanel" aria-labelledby="icon-user-tab">
+                                    <div class="tab-ctn">
+                                        <p>Manage team members, roles, and permissions from the user management panel. Invite new users, assign groups, and monitor account status in real time.</p>
+                                        <p class="tab-mg-b-0">Bulk operations are available for managing large teams. Use CSV import for onboarding multiple users at once.</p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="icon-gear" role="tabpanel" aria-labelledby="icon-gear-tab">
+                                    <div class="tab-ctn">
+                                        <p>System configuration options for administrators. Adjust global settings, manage integrations, and configure API access tokens securely.</p>
+                                        <p class="tab-mg-b-0">All configuration changes are logged in the audit trail. Use version comparison to review setting changes over time.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="recent-post-wrapper notika-shadow">
+                        <div class="recent-post-ctn">
+                            <div class="recent-post-title">
+                                <h2>Justified Tabs</h2>
+                                <p>Use <code>.nav-fill</code> to make tabs stretch to fill the full available width.</p>
+                            </div>
+                        </div>
+                        <div class="recent-post-items">
+                            <ul class="nav nav-tabs nav-fill" id="justifiedTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="just-first-tab" data-bs-toggle="tab" data-bs-target="#just-first" type="button" role="tab" aria-controls="just-first" aria-selected="true">First</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="just-second-tab" data-bs-toggle="tab" data-bs-target="#just-second" type="button" role="tab" aria-controls="just-second" aria-selected="false">Second</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="just-third-tab" data-bs-toggle="tab" data-bs-target="#just-third" type="button" role="tab" aria-controls="just-third" aria-selected="false">Third</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="just-fourth-tab" data-bs-toggle="tab" data-bs-target="#just-fourth" type="button" role="tab" aria-controls="just-fourth" aria-selected="false">Fourth</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="justifiedTabsContent">
+                                <div class="tab-pane fade show active" id="just-first" role="tabpanel" aria-labelledby="just-first-tab">
+                                    <div class="tab-ctn">
+                                        <p>Justified tabs distribute space equally across all items. This works well when you have a known number of tabs and want a balanced layout.</p>
+                                        <p class="tab-mg-b-0">Each tab takes an equal portion of the available horizontal space regardless of label length.</p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="just-second" role="tabpanel" aria-labelledby="just-second-tab">
+                                    <div class="tab-ctn">
+                                        <p>The second tab demonstrates how content transitions smoothly between panes. Bootstrap 5 handles the show/hide animation natively with CSS transitions.</p>
+                                        <p class="tab-mg-b-0">Use the <code>.fade</code> class on tab panes to enable the built-in fade transition effect.</p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="just-third" role="tabpanel" aria-labelledby="just-third-tab">
+                                    <div class="tab-ctn">
+                                        <p>Tabs can contain any HTML content including forms, tables, charts, and media. The tab container adapts its height to fit the active pane content.</p>
+                                        <p class="tab-mg-b-0">For performance-sensitive content, consider lazy-loading tab panes that contain heavy elements.</p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="just-fourth" role="tabpanel" aria-labelledby="just-fourth-tab">
+                                    <div class="tab-ctn">
+                                        <p>Four or more tabs work best with justified layout to prevent horizontal scrolling on smaller screens. On mobile, tabs will stack naturally.</p>
+                                        <p class="tab-mg-b-0">Consider using a dropdown menu for overflow tabs on narrow viewports.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 3: Vertical Tabs (full width) -->
+            <div class="row mt-4">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="recent-post-wrapper notika-shadow">
+                        <div class="recent-post-ctn">
+                            <div class="recent-post-title">
+                                <h2>Vertical Tabs</h2>
+                                <p>Side navigation layout using <code>.flex-column</code> pills with content on the right.</p>
+                            </div>
+                        </div>
+                        <div class="recent-post-items">
+                            <div class="d-flex align-items-start">
+                                <div class="nav flex-column nav-pills me-4" id="verticalTabs" role="tablist" aria-orientation="vertical" style="min-width: 160px;">
+                                    <button class="nav-link active text-start" id="vert-dashboard-tab" data-bs-toggle="pill" data-bs-target="#vert-dashboard" type="button" role="tab" aria-controls="vert-dashboard" aria-selected="true"><i class="fa-solid fa-gauge me-2"></i>Dashboard</button>
+                                    <button class="nav-link text-start" id="vert-orders-tab" data-bs-toggle="pill" data-bs-target="#vert-orders" type="button" role="tab" aria-controls="vert-orders" aria-selected="false"><i class="fa-solid fa-cart-shopping me-2"></i>Orders</button>
+                                    <button class="nav-link text-start" id="vert-products-tab" data-bs-toggle="pill" data-bs-target="#vert-products" type="button" role="tab" aria-controls="vert-products" aria-selected="false"><i class="fa-solid fa-box me-2"></i>Products</button>
+                                    <button class="nav-link text-start" id="vert-customers-tab" data-bs-toggle="pill" data-bs-target="#vert-customers" type="button" role="tab" aria-controls="vert-customers" aria-selected="false"><i class="fa-solid fa-users me-2"></i>Customers</button>
+                                </div>
+                                <div class="tab-content flex-grow-1" id="verticalTabsContent">
+                                    <div class="tab-pane fade show active" id="vert-dashboard" role="tabpanel" aria-labelledby="vert-dashboard-tab">
+                                        <div class="tab-ctn" style="margin-top: 0;">
+                                            <h5>Dashboard Overview</h5>
+                                            <p>The main dashboard provides a comprehensive view of your store's performance. Track sales, revenue, and visitor metrics through interactive charts and summary cards.</p>
+                                            <p class="tab-mg-b-0">Real-time data updates every 30 seconds. Use the date range picker to compare performance across different periods.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="vert-orders" role="tabpanel" aria-labelledby="vert-orders-tab">
+                                        <div class="tab-ctn" style="margin-top: 0;">
+                                            <h5>Order Management</h5>
+                                            <p>View and manage all customer orders from a single interface. Filter by status (pending, processing, shipped, delivered) and search by order ID or customer name.</p>
+                                            <p class="tab-mg-b-0">Bulk actions allow you to update shipping status, print invoices, or send tracking notifications for multiple orders simultaneously.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="vert-products" role="tabpanel" aria-labelledby="vert-products-tab">
+                                        <div class="tab-ctn" style="margin-top: 0;">
+                                            <h5>Product Catalog</h5>
+                                            <p>Manage your product inventory, pricing, and descriptions. Add new products with drag-and-drop image uploads and rich text descriptions.</p>
+                                            <p class="tab-mg-b-0">Inventory levels are tracked automatically. Low-stock alerts are sent when products fall below the configured threshold.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="vert-customers" role="tabpanel" aria-labelledby="vert-customers-tab">
+                                        <div class="tab-ctn" style="margin-top: 0;">
+                                            <h5>Customer Directory</h5>
+                                            <p>Access detailed customer profiles including purchase history, communication preferences, and loyalty points. Segment customers for targeted marketing campaigns.</p>
+                                            <p class="tab-mg-b-0">Customer data complies with GDPR requirements. Export or delete customer records from the privacy management section.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 4: Color Scheme Tabs + Animated Tabs -->
+            <div class="row mt-4">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="recent-post-wrapper notika-shadow">
+                        <div class="recent-post-ctn">
+                            <div class="recent-post-title">
+                                <h2>Color Scheme Tabs</h2>
+                                <p>Apply Notika brand colors using <code>data-tab-color</code> attribute on the nav element.</p>
+                            </div>
+                        </div>
+                        <div class="recent-post-items">
+                            <div class="mb-4">
+                                <h6 class="text-muted mb-2">Green (Primary)</h6>
+                                <ul class="nav nav-tabs" id="greenTabs" data-tab-color="nk-green" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="green-1-tab" data-bs-toggle="tab" data-bs-target="#green-1" type="button" role="tab" aria-selected="true">Tab One</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="green-2-tab" data-bs-toggle="tab" data-bs-target="#green-2" type="button" role="tab" aria-selected="false">Tab Two</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="green-1" role="tabpanel"><div class="tab-ctn"><p class="tab-mg-b-0">Content styled with the primary green accent color (#00c292).</p></div></div>
+                                    <div class="tab-pane fade" id="green-2" role="tabpanel"><div class="tab-ctn"><p class="tab-mg-b-0">Second pane with consistent green theme applied to active tab indicator.</p></div></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h6 class="text-muted mb-2">Blue (Info)</h6>
+                                <ul class="nav nav-tabs" id="blueTabs" data-tab-color="nk-blue" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="blue-1-tab" data-bs-toggle="tab" data-bs-target="#blue-1" type="button" role="tab" aria-selected="true">Tab One</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="blue-2-tab" data-bs-toggle="tab" data-bs-target="#blue-2" type="button" role="tab" aria-selected="false">Tab Two</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="blue-1" role="tabpanel"><div class="tab-ctn"><p class="tab-mg-b-0">Content styled with the info blue accent color (#03a9f3).</p></div></div>
+                                    <div class="tab-pane fade" id="blue-2" role="tabpanel"><div class="tab-ctn"><p class="tab-mg-b-0">Second pane with consistent blue theme applied to active tab indicator.</p></div></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h6 class="text-muted mb-2">Amber (Warning)</h6>
+                                <ul class="nav nav-tabs" id="amberTabs" data-tab-color="nk-amber" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="amber-1-tab" data-bs-toggle="tab" data-bs-target="#amber-1" type="button" role="tab" aria-selected="true">Tab One</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="amber-2-tab" data-bs-toggle="tab" data-bs-target="#amber-2" type="button" role="tab" aria-selected="false">Tab Two</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="amber-1" role="tabpanel"><div class="tab-ctn"><p class="tab-mg-b-0">Content styled with the warning amber accent color (#ff9800).</p></div></div>
+                                    <div class="tab-pane fade" id="amber-2" role="tabpanel"><div class="tab-ctn"><p class="tab-mg-b-0">Second pane with consistent amber theme applied to active tab indicator.</p></div></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h6 class="text-muted mb-2">Pink (Danger)</h6>
+                                <ul class="nav nav-tabs" id="pinkTabs" data-tab-color="nk-pink" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="pink-1-tab" data-bs-toggle="tab" data-bs-target="#pink-1" type="button" role="tab" aria-selected="true">Tab One</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pink-2-tab" data-bs-toggle="tab" data-bs-target="#pink-2" type="button" role="tab" aria-selected="false">Tab Two</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="pink-1" role="tabpanel"><div class="tab-ctn"><p class="tab-mg-b-0">Content styled with the danger pink accent color (#e91e63).</p></div></div>
+                                    <div class="tab-pane fade" id="pink-2" role="tabpanel"><div class="tab-ctn"><p class="tab-mg-b-0">Second pane with consistent pink theme applied to active tab indicator.</p></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="recent-post-wrapper notika-shadow">
+                        <div class="recent-post-ctn">
+                            <div class="recent-post-title">
+                                <h2>Animated Tabs</h2>
+                                <p>Add smooth animation effects using the <code>data-animation</code> attribute on tab content.</p>
+                            </div>
+                        </div>
+                        <div class="recent-post-items">
+                            <div class="mb-4">
+                                <h6 class="text-muted mb-2">Slide Animation</h6>
+                                <ul class="nav nav-tabs" id="slideTabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="slide-inbox-tab" data-bs-toggle="tab" data-bs-target="#slide-inbox" type="button" role="tab" aria-selected="true">Inbox</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="slide-sent-tab" data-bs-toggle="tab" data-bs-target="#slide-sent" type="button" role="tab" aria-selected="false">Sent</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="slide-drafts-tab" data-bs-toggle="tab" data-bs-target="#slide-drafts" type="button" role="tab" aria-selected="false">Drafts</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content animated-tabs" id="slideTabsContent" data-animation="slide">
+                                    <div class="tab-pane fade show active" id="slide-inbox" role="tabpanel" aria-labelledby="slide-inbox-tab">
+                                        <div class="tab-ctn">
+                                            <p>Your inbox contains 12 unread messages. Recent emails from team leads require attention before end of day.</p>
+                                            <p class="tab-mg-b-0">Use filters and labels to organize incoming messages efficiently.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="slide-sent" role="tabpanel" aria-labelledby="slide-sent-tab">
+                                        <div class="tab-ctn">
+                                            <p>Sent folder shows all outgoing messages from the past 30 days. Track read receipts and delivery confirmations here.</p>
+                                            <p class="tab-mg-b-0">Messages older than 30 days are archived automatically.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="slide-drafts" role="tabpanel" aria-labelledby="slide-drafts-tab">
+                                        <div class="tab-ctn">
+                                            <p>You have 3 saved drafts. Drafts are auto-saved every 60 seconds while composing to prevent data loss.</p>
+                                            <p class="tab-mg-b-0">Drafts sync across devices so you can start on desktop and finish on mobile.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h6 class="text-muted mb-2">Fade &amp; Scale Animation</h6>
+                                <ul class="nav nav-tabs" id="fadeTabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="fade-tasks-tab" data-bs-toggle="tab" data-bs-target="#fade-tasks" type="button" role="tab" aria-selected="true">Tasks</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="fade-notes-tab" data-bs-toggle="tab" data-bs-target="#fade-notes" type="button" role="tab" aria-selected="false">Notes</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="fade-files-tab" data-bs-toggle="tab" data-bs-target="#fade-files" type="button" role="tab" aria-selected="false">Files</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content animated-tabs" id="fadeTabsContent" data-animation="fade-scale">
+                                    <div class="tab-pane fade show active" id="fade-tasks" role="tabpanel" aria-labelledby="fade-tasks-tab">
+                                        <div class="tab-ctn">
+                                            <p>Active tasks for this sprint: 8 in progress, 3 pending review. Use the kanban board for drag-and-drop task management.</p>
+                                            <p class="tab-mg-b-0">Overdue tasks are highlighted in red on the timeline view.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="fade-notes" role="tabpanel" aria-labelledby="fade-notes-tab">
+                                        <div class="tab-ctn">
+                                            <p>Shared notes and meeting minutes from the team. Use markdown formatting for rich text, and @mention teammates to notify them.</p>
+                                            <p class="tab-mg-b-0">Notes support real-time collaborative editing with up to 10 simultaneous users.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="fade-files" role="tabpanel" aria-labelledby="fade-files-tab">
+                                        <div class="tab-ctn">
+                                            <p>Project files organized by category. Upload documents, images, and spreadsheets with drag-and-drop. Maximum file size: 25MB.</p>
+                                            <p class="tab-mg-b-0">Version history is maintained for all uploaded files. Restore previous versions from the file detail view.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Tabs Content Area End -->
+
+    <!-- Start Footer area-->
+    <div class="footer-copyright-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="footer-copy-right">
+                        <p>Copyright © 2026. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>. Modernized with Vite.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer area-->
+
+    <!-- ONLY VITE ENTRY POINT - Everything else bundled by Vite -->
+    <script type="module" src="/src/js/pages/tabs.js"></script>
+</body>
+</html>

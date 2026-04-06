@@ -1,0 +1,83 @@
+/* ══════════════════════════════════════════════
+   custom.css — Estilos propios del Dashboard
+   ══════════════════════════════════════════════ */
+
+/* ── KPI Cards ── */
+.kpi-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    border: 1px solid rgba(0,0,0,.06);
+    padding: 24px;
+    transition: box-shadow .2s, transform .2s;
+}
+.kpi-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,.15);
+    transform: translateY(-2px);
+}
+.kpi-card h2 { font-size: 28px; font-weight: 700; margin: 0; color: #333; }
+.kpi-card p  { font-size: 13px; color: #999; margin: 8px 0 0; }
+.kpi-card .kpi-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: #fff;
+}
+.kpi-icon.bg-primary-green  { background: #00c292; }
+.kpi-icon.bg-warning-orange { background: #ff9800; }
+.kpi-icon.bg-info-blue      { background: #03a9f3; }
+
+/* ── Inscripciones — fila nueva (sin leer) ── */
+.row-novedad { background-color: #fff8e1 !important; }
+.badge-enviado { font-size: 16px; }
+
+/* ── Panel de alertas ── */
+.alert-panel { max-height: 360px; overflow-y: auto; }
+.alert-panel .alert { font-size: 13px; }
+
+/* ── Sección de filtros ── */
+.filter-section {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    padding: 20px 24px;
+    margin-bottom: 30px;
+}
+
+/* ── Dashboard index — welcome card ── */
+.welcome-card {
+    background: linear-gradient(135deg, #00c292 0%, #00a878 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 16px rgba(0,194,146,.3);
+}
+.welcome-card h2 { font-weight: 700; margin-bottom: 8px; }
+.welcome-card p  { opacity: .9; margin: 0; }
+
+/* ── Quick-link cards (index) ── */
+.quick-link-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    border: 1px solid rgba(0,0,0,.06);
+    padding: 28px 24px;
+    text-align: center;
+    transition: box-shadow .2s, transform .2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.quick-link-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,.15);
+    transform: translateY(-2px);
+    color: inherit;
+}
+.quick-link-card i {
+    font-size: 36px;
+    margin-bottom: 12px;
+    color: #00c292;
+}
+.quick-link-card h5 {
+    font-weight: 600;
+    margin: 0;
+}

@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dropdowns | Notika - Modern Vite Template</title>
+    <meta name="description" content="Modern Notika Admin Template powered by Vite 7.1.5">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/logo/notika-icon.svg">
+    <link rel="alternate icon" href="/favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome and all other CSS imported via Vite -->
+    <!-- ONLY Vite entry point - everything else bundled -->
+</head>
+
+<body>
+    <!-- Modern Bootstrap 5 Header -->
+    <header class="notika-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Logo Section -->
+                <div class="col-lg-4 col-6">
+                    <div class="notika-brand">
+                        <a href="index.html">
+                            <!-- Desktop Logo (768px and up) -->
+                            <img src="/logo/notika-logo-horizontal.svg" alt="Notika" class="d-none d-md-block" style="height: 40px;">
+                            <!-- Mobile Logo (below 768px) -->
+                            <img src="/logo/notika-icon.svg" alt="Notika" class="d-md-none" style="height: 35px; width: 35px;">
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Navigation Section -->
+                <div class="col-lg-8 col-6">
+                    <div class="notika-nav justify-content-end d-flex align-items-center gap-2 gap-lg-3">
+                        
+                        <!-- Search -->
+                        <div class="dropdown">
+                            <button class="notika-nav-link" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end notika-dropdown search-dropdown">
+                                <div class="search-input-group">
+                                    <input type="text" placeholder="Search anything..." class="form-control">
+                                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Messages -->
+                        <div class="dropdown">
+                            <button class="notika-nav-link position-relative" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span class="notika-badge">5</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end notika-dropdown">
+                                <div class="notika-dropdown-header">
+                                    Messages
+                                </div>
+                                <div class="notika-dropdown-body">
+                                    <a class="notika-dropdown-item" href="view-email.html">
+                                        <img src="/post/1.jpg" alt="User">
+                                        <div class="notika-dropdown-content">
+                                            <h6>David Belle</h6>
+                                            <p>Hey! How's the project going? Need any help?</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="view-email.html">
+                                        <img src="/post/2.jpg" alt="User">
+                                        <div class="notika-dropdown-content">
+                                            <h6>Sarah Wilson</h6>
+                                            <p>The new design looks amazing!</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="view-email.html">
+                                        <img src="/post/4.jpg" alt="User">
+                                        <div class="notika-dropdown-content">
+                                            <h6>Mike Johnson</h6>
+                                            <p>Thanks for the quick dashboard fix!</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="notika-dropdown-footer">
+                                    <a href="inbox.html">View All Messages</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Notifications -->
+                        <div class="dropdown">
+                            <button class="notika-nav-link position-relative" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-bell"></i>
+                                <span class="notika-badge">3</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end notika-dropdown">
+                                <div class="notika-dropdown-header">
+                                    Notifications
+                                </div>
+                                <div class="notika-dropdown-body">
+                                    <a class="notika-dropdown-item" href="notification.html">
+                                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; margin-right: 12px;">
+                                            <i class="fa-solid fa-circle-check" style="font-size: 14px;"></i>
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>Task Completed</h6>
+                                            <p>Bootstrap 5 migration completed successfully.</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="notification.html">
+                                        <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; margin-right: 12px;">
+                                            <i class="fa-solid fa-bell" style="font-size: 14px;"></i>
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>Server Alert</h6>
+                                            <p>Response time higher than usual.</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="notification.html">
+                                        <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; margin-right: 12px;">
+                                            <i class="fa-solid fa-message" style="font-size: 14px;"></i>
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>New Message</h6>
+                                            <p>You have 2 unread messages.</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="notika-dropdown-footer">
+                                    <a href="notification.html">View All Notifications</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tasks - Desktop Only -->
+                        <div class="dropdown d-none d-lg-block">
+                            <button class="notika-nav-link position-relative" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-list-check"></i>
+                                <span class="notika-badge">2</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end notika-dropdown" style="min-width: 280px;">
+                                <div class="notika-dropdown-header">
+                                    Active Tasks
+                                </div>
+                                <div class="notika-dropdown-body">
+                                    <div class="task-item px-3">
+                                        <div class="task-title">Website Redesign</div>
+                                        <div class="task-progress">
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 85%"></div>
+                                            </div>
+                                            <small class="text-muted">85% Complete</small>
+                                        </div>
+                                    </div>
+                                    <div class="task-item px-3">
+                                        <div class="task-title">API Integration</div>
+                                        <div class="task-progress">
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 65%"></div>
+                                            </div>
+                                            <small class="text-muted">65% Complete</small>
+                                        </div>
+                                    </div>
+                                    <div class="task-item px-3">
+                                        <div class="task-title">Database Optimization</div>
+                                        <div class="task-progress">
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 95%"></div>
+                                            </div>
+                                            <small class="text-muted">95% Complete</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="notika-dropdown-footer">
+                                    <a href="widgets.html">View All Tasks</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Chat -->
+                        <div class="dropdown">
+                            <button class="notika-nav-link" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-message"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end notika-dropdown">
+                                <div class="notika-dropdown-header">
+                                    Team Chat
+                                </div>
+                                <div class="notika-dropdown-body">
+                                    <a class="notika-dropdown-item" href="compose-email.html">
+                                        <div style="position: relative;">
+                                            <img src="/post/1.jpg" alt="User">
+                                            <div class="chat-status"></div>
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>John Doe</h6>
+                                            <p>Online - Available</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="compose-email.html">
+                                        <div style="position: relative;">
+                                            <img src="/post/2.jpg" alt="User">
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>Sarah Smith</h6>
+                                            <p>Last seen 2 hours ago</p>
+                                        </div>
+                                    </a>
+                                    <a class="notika-dropdown-item" href="compose-email.html">
+                                        <div style="position: relative;">
+                                            <img src="/post/4.jpg" alt="User">
+                                        </div>
+                                        <div class="notika-dropdown-content">
+                                            <h6>Mike Johnson</h6>
+                                            <p>Away - Back in 10 min</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="notika-dropdown-footer">
+                                    <a href="compose-email.html">Open Chat</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Menu Toggle -->
+                        <button class="notika-nav-link d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNavOffcanvas" aria-controls="mobileNavOffcanvas">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End Modern Header -->
+
+    <!-- Desktop Navigation -->
+    <nav class="navbar navbar-expand-lg notika-navbar d-none d-lg-block">
+        <div class="container">
+            <div class="navbar-collapse">
+                <ul class="navbar-nav w-100 justify-content-center">
+
+                    <!-- Home Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="index.html">Dashboard One</a></li>
+                            <li><a class="dropdown-item" href="index-2.html">Dashboard Two</a></li>
+                            <li><a class="dropdown-item" href="index-3.html">Dashboard Three</a></li>
+                            <li><a class="dropdown-item" href="index-4.html">Dashboard Four</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="analytics.html">Analytics</a></li>
+                            <li><a class="dropdown-item" href="widgets.html">Widgets</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Email Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>Email</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="inbox.html">Inbox</a></li>
+                            <li><a class="dropdown-item" href="view-email.html">View Email</a></li>
+                            <li><a class="dropdown-item" href="compose-email.html">Compose Email</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Interface Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <span>Interface</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="animations.html">Animations</a></li>
+                            <li><a class="dropdown-item" href="google-map.html">Google Map</a></li>
+                            <li><a class="dropdown-item" href="data-map.html">Data Maps</a></li>
+                            <li><a class="dropdown-item" href="code-editor.html">Code Editor</a></li>
+                            <li><a class="dropdown-item" href="image-cropper.html">Images Cropper</a></li>
+                            <li><a class="dropdown-item" href="wizard.html">Wizard</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Charts Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-chart-column"></i>
+                            <span>Charts</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="flot-charts.html">Flot Charts</a></li>
+                            <li><a class="dropdown-item" href="bar-charts.html">Bar Charts</a></li>
+                            <li><a class="dropdown-item" href="line-charts.html">Line Charts</a></li>
+                            <li><a class="dropdown-item" href="area-charts.html">Area Charts</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Tables Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-table-columns"></i>
+                            <span>Tables</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="normal-table.html">Normal Table</a></li>
+                            <li><a class="dropdown-item" href="data-table.html">Data Table</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Forms Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <span>Forms</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="form-elements.html">Form Elements</a></li>
+                            <li><a class="dropdown-item" href="form-components.html">Form Components</a></li>
+                            <li><a class="dropdown-item" href="form-examples.html">Form Examples</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Components Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-cube"></i>
+                            <span>Components</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="notification.html">Notifications</a></li>
+                            <li><a class="dropdown-item" href="alert.html">Alerts</a></li>
+                            <li><a class="dropdown-item" href="modals.html">Modals</a></li>
+                            <li><a class="dropdown-item" href="buttons.html">Buttons</a></li>
+                            <li><a class="dropdown-item" href="tabs.html">Tabs</a></li>
+                            <li><a class="dropdown-item" href="accordion.html">Accordion</a></li>
+                            <li><a class="dropdown-item" href="dialog.html">Dialogs</a></li>
+                            <li><a class="dropdown-item" href="popovers.html">Popovers</a></li>
+                            <li><a class="dropdown-item" href="tooltips.html">Tooltips</a></li>
+                            <li><a class="dropdown-item" href="dropdown.html">Dropdowns</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Pages Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis"></i>
+                            <span>Pages</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="contact.html">Contact</a></li>
+                            <li><a class="dropdown-item" href="invoice.html">Invoice</a></li>
+                            <li><a class="dropdown-item" href="typography.html">Typography</a></li>
+                            <li><a class="dropdown-item" href="color.html">Color</a></li>
+                            <li><a class="dropdown-item" href="login-register.html">Login Register</a></li>
+                            <li><a class="dropdown-item" href="404.html">404 Page</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Desktop Navigation -->
+
+    <!-- Mobile Offcanvas Navigation -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileNavOffcanvas" aria-labelledby="mobileNavOffcanvasLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="mobileNavOffcanvasLabel">
+                <img src="/logo/notika-logo-horizontal.svg" alt="Notika" style="height: 30px;">
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <!-- Mobile Menu List -->
+            <nav class="navbar-nav flex-column">
+
+                <!-- Home Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileHomeMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-house me-2"></i> Home</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileHomeMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="index.html">Dashboard One</a>
+                            <a class="nav-link py-1" href="index-2.html">Dashboard Two</a>
+                            <a class="nav-link py-1" href="index-3.html">Dashboard Three</a>
+                            <a class="nav-link py-1" href="index-4.html">Dashboard Four</a>
+                            <a class="nav-link py-1" href="analytics.html">Analytics</a>
+                            <a class="nav-link py-1" href="widgets.html">Widgets</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileEmailMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-envelope me-2"></i> Email</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileEmailMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="inbox.html">Inbox</a>
+                            <a class="nav-link py-1" href="view-email.html">View Email</a>
+                            <a class="nav-link py-1" href="compose-email.html">Compose Email</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interface Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileInterfaceMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-pen-to-square me-2"></i> Interface</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileInterfaceMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="animations.html">Animations</a>
+                            <a class="nav-link py-1" href="google-map.html">Google Map</a>
+                            <a class="nav-link py-1" href="data-map.html">Data Maps</a>
+                            <a class="nav-link py-1" href="code-editor.html">Code Editor</a>
+                            <a class="nav-link py-1" href="image-cropper.html">Images Cropper</a>
+                            <a class="nav-link py-1" href="wizard.html">Wizard</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileChartsMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-chart-column me-2"></i> Charts</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileChartsMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="flot-charts.html">Flot Charts</a>
+                            <a class="nav-link py-1" href="bar-charts.html">Bar Charts</a>
+                            <a class="nav-link py-1" href="line-charts.html">Line Charts</a>
+                            <a class="nav-link py-1" href="area-charts.html">Area Charts</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tables Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileTablesMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-table-columns me-2"></i> Tables</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileTablesMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="normal-table.html">Normal Table</a>
+                            <a class="nav-link py-1" href="data-table.html">Data Table</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Forms Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileFormsMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-file-lines me-2"></i> Forms</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileFormsMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="form-elements.html">Form Elements</a>
+                            <a class="nav-link py-1" href="form-components.html">Form Components</a>
+                            <a class="nav-link py-1" href="form-examples.html">Form Examples</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Components Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobileComponentsMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-cube me-2"></i> Components</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobileComponentsMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="notification.html">Notifications</a>
+                            <a class="nav-link py-1" href="alert.html">Alerts</a>
+                            <a class="nav-link py-1" href="modals.html">Modals</a>
+                            <a class="nav-link py-1" href="buttons.html">Buttons</a>
+                            <a class="nav-link py-1" href="tabs.html">Tabs</a>
+                            <a class="nav-link py-1" href="accordion.html">Accordion</a>
+                            <a class="nav-link py-1" href="dialog.html">Dialogs</a>
+                            <a class="nav-link py-1" href="popovers.html">Popovers</a>
+                            <a class="nav-link py-1" href="tooltips.html">Tooltips</a>
+                            <a class="nav-link py-1" href="dropdown.html">Dropdowns</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pages Section -->
+                <div class="nav-item border-bottom">
+                    <a class="nav-link d-flex align-items-center justify-content-between px-3 py-2" data-bs-toggle="collapse" href="#mobilePagesMenu" role="button" aria-expanded="false">
+                        <span><i class="fa-solid fa-ellipsis me-2"></i> Pages</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
+                    </a>
+                    <div class="collapse" id="mobilePagesMenu">
+                        <div class="nav flex-column ps-4">
+                            <a class="nav-link py-1" href="contact.html">Contact</a>
+                            <a class="nav-link py-1" href="invoice.html">Invoice</a>
+                            <a class="nav-link py-1" href="typography.html">Typography</a>
+                            <a class="nav-link py-1" href="color.html">Color</a>
+                            <a class="nav-link py-1" href="login-register.html">Login Register</a>
+                            <a class="nav-link py-1" href="404.html">404 Page</a>
+                        </div>
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+    </div>
+    <!-- End Mobile Offcanvas Navigation -->
+
+    <!-- Breadcomb area Start-->
+    <div class="breadcomb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="breadcomb-list">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="fa-solid fa-cube"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Dropdowns</h2>
+                                        <p>Welcome to Notika <span class="bread-ntd">Admin Template</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-3">
+                                <div class="breadcomb-report">
+                                    <button data-bs-toggle="tooltip" data-bs-placement="left" title="Download Report" class="btn"><i class="fa-solid fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcomb area End-->
+
+    <!-- Dropdown area start-->
+    <div class="dropdown-area">
+        <div class="container">
+
+            <!-- Section 1: Button Dropdowns -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="dd-demo-card">
+                        <h5 class="dd-demo-title">Button Dropdowns</h5>
+                        <p class="dd-demo-desc">Standard dropdown buttons in different color variants.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Primary</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown">Success</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Approve</a></li>
+                                    <li><a class="dropdown-item" href="#">Mark as done</a></li>
+                                    <li><a class="dropdown-item" href="#">Archive</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">Danger</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    <li><a class="dropdown-item" href="#">Remove all</a></li>
+                                    <li><a class="dropdown-item" href="#">Reset</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown">Warning</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Review</a></li>
+                                    <li><a class="dropdown-item" href="#">Flag</a></li>
+                                    <li><a class="dropdown-item" href="#">Report</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown">Info</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Details</a></li>
+                                    <li><a class="dropdown-item" href="#">Help</a></li>
+                                    <li><a class="dropdown-item" href="#">About</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">Dark</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Split Button Dropdowns -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="dd-demo-card">
+                        <h5 class="dd-demo-title">Split Button Dropdowns</h5>
+                        <p class="dd-demo-desc">Separate the toggle from the action with a split button group.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">Actions</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                                    <li><a class="dropdown-item" href="#">Duplicate</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#">Delete</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success">Export</button>
+                                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Export as PDF</a></li>
+                                    <li><a class="dropdown-item" href="#">Export as CSV</a></li>
+                                    <li><a class="dropdown-item" href="#">Export as Excel</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-secondary">More</button>
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Share</a></li>
+                                    <li><a class="dropdown-item" href="#">Print</a></li>
+                                    <li><a class="dropdown-item" href="#">Download</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Dropdown Directions -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="dd-demo-card">
+                        <h5 class="dd-demo-title">Dropdown Directions</h5>
+                        <p class="dd-demo-desc">Control which direction the menu appears.</p>
+                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-chevron-down me-1"></i> Dropdown
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropup">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-chevron-up me-1"></i> Dropup
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropend">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    Dropend <i class="fa-solid fa-chevron-right ms-1"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropstart">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-chevron-left me-1"></i> Dropstart
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Sizing -->
+            <div class="row mt-4">
+                <div class="col-lg-6 col-12">
+                    <div class="dd-demo-card">
+                        <h5 class="dd-demo-title">Dropdown Sizes</h5>
+                        <p class="dd-demo-desc">Large, default, and small button sizes.</p>
+                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown">Large</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Default</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">Small</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Auto Close Behavior -->
+                <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+                    <div class="dd-demo-card">
+                        <h5 class="dd-demo-title">Auto Close Behavior</h5>
+                        <p class="dd-demo-desc">Control when the dropdown closes.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true">Default</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Closes on click anywhere</a></li>
+                                    <li><a class="dropdown-item" href="#">This is the default</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="inside">Inside</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Click inside to close</a></li>
+                                    <li><a class="dropdown-item" href="#">Outside click won't close</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">Outside</button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Click outside to close</a></li>
+                                    <li><a class="dropdown-item" href="#">Inside click won't close</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Menu Content Features -->
+            <div class="row mt-4">
+                <div class="col-lg-6 col-12">
+                    <div class="dd-demo-card">
+                        <h5 class="dd-demo-title">Rich Menu Content</h5>
+                        <p class="dd-demo-desc">Headers, dividers, icons, disabled and active states.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-gear me-1"></i> Options
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><h6 class="dropdown-header">Account</h6></li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>Settings</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bell me-2"></i>Notifications <span class="badge bg-danger ms-auto">3</span></a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><h6 class="dropdown-header">Actions</h6></li>
+                                    <li><a class="dropdown-item active" href="#"><i class="fa-solid fa-circle-check me-2"></i>Active item</a></li>
+                                    <li><a class="dropdown-item disabled" href="#"><i class="fa-solid fa-ban me-2"></i>Disabled item</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Sign out</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-share-nodes me-1"></i> Share
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-envelope me-2"></i>Email</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-link me-2"></i>Copy link</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><span class="dropdown-item-text text-muted small">Or share via social</span></li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa-brands fa-x-twitter me-2"></i>X (Twitter)</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa-brands fa-linkedin me-2"></i>LinkedIn</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 7: Dark & Aligned Dropdowns -->
+                <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+                    <div class="dd-demo-card">
+                        <h5 class="dd-demo-title">Dark & Alignment</h5>
+                        <p class="dd-demo-desc">Dark theme menu and end-aligned positioning.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">Dark Menu</button>
+                                <ul class="dropdown-menu dropdown-menu-dark">
+                                    <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">End-Aligned</button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">This menu</a></li>
+                                    <li><a class="dropdown-item" href="#">aligns to the end</a></li>
+                                    <li><a class="dropdown-item" href="#">of the button</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 8: Form Dropdown & Text -->
+            <div class="row mt-4">
+                <div class="col-lg-6 col-12">
+                    <div class="dd-demo-card">
+                        <h5 class="dd-demo-title">Form in Dropdown</h5>
+                        <p class="dd-demo-desc">Embed a login form inside a dropdown menu.</p>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                <i class="fa-solid fa-arrow-right-to-bracket me-1"></i> Sign in
+                            </button>
+                            <div class="dropdown-menu p-4" style="min-width: 280px;">
+                                <form>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email address</label>
+                                        <input type="email" class="form-control form-control-sm" placeholder="email@example.com">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" class="form-control form-control-sm" placeholder="Password">
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input type="checkbox" class="form-check-input" id="ddRemember">
+                                        <label class="form-check-label" for="ddRemember">Remember me</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-sm w-100">Sign in</button>
+                                </form>
+                                <div class="dropdown-divider mt-3"></div>
+                                <a class="small" href="#">Forgot password?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 9: Text & Notification Menu -->
+                <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+                    <div class="dd-demo-card">
+                        <h5 class="dd-demo-title">Notification Menu</h5>
+                        <p class="dd-demo-desc">A styled dropdown mimicking notification panels.</p>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-bell me-1"></i> Notifications
+                                <span class="badge bg-danger ms-1">4</span>
+                            </button>
+                            <ul class="dropdown-menu" style="min-width: 300px;">
+                                <li><h6 class="dropdown-header">Recent Notifications</h6></li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-start gap-2 py-2" href="#">
+                                        <span class="dd-notif-dot bg-success"></span>
+                                        <div>
+                                            <strong class="small">Build Passed</strong>
+                                            <div class="text-muted small">Production deploy completed</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-start gap-2 py-2" href="#">
+                                        <span class="dd-notif-dot bg-warning"></span>
+                                        <div>
+                                            <strong class="small">High CPU Usage</strong>
+                                            <div class="text-muted small">Server #3 at 92% capacity</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-start gap-2 py-2" href="#">
+                                        <span class="dd-notif-dot bg-info"></span>
+                                        <div>
+                                            <strong class="small">New Comment</strong>
+                                            <div class="text-muted small">Sarah replied to your review</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-start gap-2 py-2" href="#">
+                                        <span class="dd-notif-dot bg-danger"></span>
+                                        <div>
+                                            <strong class="small">Payment Failed</strong>
+                                            <div class="text-muted small">Invoice #1042 requires attention</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center small text-primary" href="#">View all notifications</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Dropdown area End-->
+    <!-- Start Footer area-->
+
+    <!-- Footer area Start-->
+    <div class="footer-copyright-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="footer-copy-right">
+                        <p>Copyright © 2026
+. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer area-->
+
+    <!-- ONLY VITE ENTRY POINT - Everything else bundled by Vite -->
+    <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>
