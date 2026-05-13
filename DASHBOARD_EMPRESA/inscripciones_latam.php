@@ -1,12 +1,12 @@
 <?php
 /**
- * inscripciones.php
- * Modulo de Inscripciones Espana
+ * inscripciones_latam.php
+ * Modulo de Inscripciones LATAM
  */
 
 require_once __DIR__ . '/config/conexion.php';
 
-function fetch_count(PDO $pdo, string $fromSql, array $where, array $params): int
+function fetch_count_latam(PDO $pdo, string $fromSql, array $where, array $params): int
 {
     $sql = "SELECT COUNT(*) {$fromSql}";
     if ($where) {
@@ -19,23 +19,13 @@ function fetch_count(PDO $pdo, string $fromSql, array $where, array $params): in
     return (int) $stmt->fetchColumn();
 }
 
-function format_datetime_value(?string $value): string
+function format_latam_date(?string $value): string
 {
     if (empty($value)) {
         return '-';
     }
 
-    $timestamp = strtotime($value);
-    return $timestamp ? date('d/m/Y H:i', $timestamp) : $value;
-}
-
-function format_short_date(?string $value): string
-{
-    if (empty($value)) {
-        return '-';
-    }
-
-    $formats = ['d/m/Y', 'Y-m-d', 'd/m/y'];
+    $formats = ['d/m/y', 'd/m/Y', 'Y-m-d'];
     foreach ($formats as $format) {
         $date = DateTime::createFromFormat($format, $value);
         if ($date instanceof DateTime) {
@@ -47,30 +37,24 @@ function format_short_date(?string $value): string
     return $timestamp ? date('d/m/Y', $timestamp) : $value;
 }
 
-function build_attendee_name(array $row): string
+function build_latam_attendee_name(array $row): string
 {
     $fullName = trim(($row['nombre_asistente'] ?? '') . ' ' . ($row['apellidos_asistente'] ?? ''));
-    if ($fullName !== '') {
-        return $fullName;
-    }
-
-    $fallback = trim((string) ($row['nombre_alumno'] ?? ''));
-    return $fallback !== '' ? $fallback : 'Sin asignar';
+    return $fullName !== '' ? $fullName : 'Sin asignar';
 }
 
 $filtro_anio = isset($_GET['anio']) ? (int) $_GET['anio'] : null;
 $filtro_empresa = isset($_GET['empresa']) ? trim($_GET['empresa']) : '';
 $filtro_pago = isset($_GET['pago']) ? trim($_GET['pago']) : '';
 
-$baseFrom = "FROM inscripciones i
-LEFT JOIN Empresas e ON e.id = i.id_empresa
-LEFT JOIN Cursos c ON c.id_curso = i.id_curso";
+$baseFrom = "FROM inscripciones_latam i
+LEFT JOIN Empresas_latam e ON e.id = i.id_empresa";
 
 $where = [];
 $params = [];
 
 if ($filtro_anio) {
-    $where[] = 'YEAR(i.fecha_inscripcion) = :anio';
+    $where[] = "YEAR(STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y')) = :anio";
     $params[':anio'] = $filtro_anio;
 }
 if ($filtro_empresa !== '') {
@@ -84,57 +68,46 @@ if ($filtro_pago !== '') {
 
 $whereSql = $where ? 'WHERE ' . implode(' AND ', $where) : '';
 
-$total_inscripciones = fetch_count($pdo, $baseFrom, $where, $params);
-$pendientes_pago = fetch_count($pdo, $baseFrom, array_merge($where, ['i.pagado = 0']), $params);
-$novedades = fetch_count($pdo, $baseFrom, array_merge($where, ['i.leido = 0']), $params);
+$total_inscripciones = fetch_count_latam($pdo, $baseFrom, $where, $params);
+$pendientes_pago = fetch_count_latam($pdo, $baseFrom, array_merge($where, ['i.pagado = 0']), $params);
+$novedades = fetch_count_latam($pdo, $baseFrom, array_merge($where, ['i.leido = 0']), $params);
 
 $sqlTabla = "SELECT
     i.id,
     i.fecha_inscripcion,
     i.f_ini,
-    i.id_curso,
     i.curso,
-    i.accion_formativa,
-    i.accion_formativa_externa,
     i.nombre_asistente,
     i.apellidos_asistente,
-    i.nombre_alumno,
-    i.canal,
-    i.bonificacion,
-    i.facturado,
+    i.proforma,
     i.pagado,
+    i.canal,
     i.leido,
-    i.email_enviado,
+    i.descartada,
     i.baja,
-    i.pedido,
-    COALESCE(NULLIF(TRIM(e.razon_social), ''), 'Empresa no asociada') AS empresa_nombre,
-    COALESCE(
-        NULLIF(TRIM(i.curso), ''),
-        NULLIF(TRIM(c.nombre_curso), ''),
-        NULLIF(TRIM(i.accion_formativa_externa), ''),
-        NULLIF(TRIM(i.accion_formativa), ''),
-        NULLIF(TRIM(i.id_curso), ''),
-        'Curso sin identificar'
-    ) AS curso_mostrado
+    i.factura,
+    i.grupo,
+    i.accion_formativa,
+    COALESCE(NULLIF(TRIM(e.razon_social), ''), 'Empresa no asociada') AS empresa_nombre
 {$baseFrom}
 {$whereSql}
-ORDER BY i.fecha_inscripcion DESC, i.id DESC";
+ORDER BY STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y') DESC, i.id DESC";
 $stmt = $pdo->prepare($sqlTabla);
 $stmt->execute($params);
 $inscripciones = $stmt->fetchAll();
 
 $mesActual = date('Y-m');
 $mesAnterior = date('Y-m', strtotime('-1 month'));
-$chartWhere = array_merge($where, ['i.fecha_inscripcion IS NOT NULL']);
+$chartWhere = array_merge($where, ["STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y') IS NOT NULL"]);
 $chartParams = $params;
 $chartParams[':mes_actual'] = $mesActual;
 $chartParams[':mes_anterior'] = $mesAnterior;
-$chartSql = "SELECT DATE_FORMAT(i.fecha_inscripcion, '%Y-%m') AS mes, COUNT(*) AS total
+$chartSql = "SELECT DATE_FORMAT(STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y'), '%Y-%m') AS mes, COUNT(*) AS total
 {$baseFrom}";
 if ($chartWhere) {
     $chartSql .= ' WHERE ' . implode(' AND ', $chartWhere);
 }
-$chartSql .= " GROUP BY DATE_FORMAT(i.fecha_inscripcion, '%Y-%m')
+$chartSql .= " GROUP BY DATE_FORMAT(STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y'), '%Y-%m')
 HAVING mes IN (:mes_actual, :mes_anterior)
 ORDER BY mes";
 $stmt = $pdo->prepare($chartSql);
@@ -154,37 +127,35 @@ foreach ($chartData as $row) {
 
 $incompletos = (int) $pdo->query(
     "SELECT COUNT(*)
-     FROM inscripciones i
-     LEFT JOIN Empresas e ON e.id = i.id_empresa
+     FROM inscripciones_latam i
+     LEFT JOIN Empresas_latam e ON e.id = i.id_empresa
      WHERE NULLIF(TRIM(COALESCE(e.razon_social, '')), '') IS NULL
-        OR (
-            NULLIF(TRIM(COALESCE(i.nombre_asistente, '')), '') IS NULL
-            AND NULLIF(TRIM(COALESCE(i.nombre_alumno, '')), '') IS NULL
-        )
-        OR (
-            NULLIF(TRIM(COALESCE(i.curso, '')), '') IS NULL
-            AND NULLIF(TRIM(COALESCE(i.accion_formativa, '')), '') IS NULL
-            AND NULLIF(TRIM(COALESCE(i.accion_formativa_externa, '')), '') IS NULL
-            AND NULLIF(TRIM(COALESCE(i.id_curso, '')), '') IS NULL
-        )"
+        OR NULLIF(TRIM(COALESCE(i.nombre_asistente, '')), '') IS NULL
+        OR NULLIF(TRIM(COALESCE(i.curso, '')), '') IS NULL"
 )->fetchColumn();
 
-$impagos_criticos = (int) $pdo->query(
+$facturas_sin_pago = (int) $pdo->query(
     "SELECT COUNT(*)
-     FROM inscripciones
-     WHERE facturado = 1 AND pagado = 0"
+     FROM inscripciones_latam
+     WHERE TRIM(COALESCE(factura, '')) <> '' AND pagado = 0"
+)->fetchColumn();
+
+$descartadas = (int) $pdo->query(
+    "SELECT COUNT(*)
+     FROM inscripciones_latam
+     WHERE descartada = 1"
 )->fetchColumn();
 
 $anios = $pdo->query(
-    "SELECT DISTINCT YEAR(fecha_inscripcion) AS anio
-     FROM inscripciones
-     WHERE fecha_inscripcion IS NOT NULL
+    "SELECT DISTINCT YEAR(STR_TO_DATE(fecha_inscripcion, '%d/%m/%y')) AS anio
+     FROM inscripciones_latam
+     WHERE STR_TO_DATE(fecha_inscripcion, '%d/%m/%y') IS NOT NULL
      ORDER BY anio DESC"
 )->fetchAll();
 
 $empresas = $pdo->query(
     "SELECT DISTINCT razon_social AS empresa
-     FROM Empresas
+     FROM Empresas_latam
      WHERE TRIM(COALESCE(razon_social, '')) <> ''
      ORDER BY razon_social"
 )->fetchAll();
@@ -206,11 +177,11 @@ $mesesEs = [
 $label_mes_anterior = $mesesEs[(int) date('n', strtotime('-1 month'))] . ' ' . date('Y', strtotime('-1 month'));
 $label_mes_actual = $mesesEs[(int) date('n')] . ' ' . date('Y');
 
-$page_title = 'Inscripciones ES';
-$active_page = 'inscripciones_espana';
-$breadcrumb_title = 'Inscripciones Espana';
-$breadcrumb_desc = 'Gestion y control de inscripciones nacionales';
-$breadcrumb_icon = 'fa-solid fa-user-plus';
+$page_title = 'Inscripciones LATAM';
+$active_page = 'inscripciones_latam';
+$breadcrumb_title = 'Inscripciones LATAM';
+$breadcrumb_desc = 'Gestion y control de inscripciones LATAM';
+$breadcrumb_icon = 'fa-solid fa-earth-americas';
 $breadcrumb_buttons = '<button class="btn btn-sm" data-bs-toggle="tooltip" title="Exportar datos" onclick="exportarCSV()"><i class="fa-solid fa-file-export"></i></button>';
 $extra_css = '';
 
@@ -262,7 +233,7 @@ require_once __DIR__ . '/includes/header.php';
     <div class="container" style="margin-top: 30px;">
         <div class="filter-section">
             <h6 class="mb-3"><i class="fa-solid fa-filter me-2"></i>Filtros</h6>
-            <form method="GET" action="inscripciones.php" id="formFiltros">
+            <form method="GET" action="inscripciones_latam.php" id="formFiltros">
                 <div class="row g-3 align-items-end">
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                         <label for="filtroAnio" class="form-label">Ano</label>
@@ -298,7 +269,7 @@ require_once __DIR__ . '/includes/header.php';
                         <button type="submit" class="btn btn-sm text-white" style="background:#00c292;">
                             <i class="fa-solid fa-magnifying-glass me-1"></i> Filtrar
                         </button>
-                        <a href="inscripciones.php" class="btn btn-sm btn-outline-secondary ms-1">
+                        <a href="inscripciones_latam.php" class="btn btn-sm btn-outline-secondary ms-1">
                             <i class="fa-solid fa-rotate-left me-1"></i> Limpiar
                         </a>
                     </div>
@@ -312,14 +283,12 @@ require_once __DIR__ . '/includes/header.php';
             <div class="row">
                 <div class="col-lg-8 col-md-7 col-sm-12">
                     <div class="sale-statistic-inner notika-shadow" style="padding: 24px; margin: 30px 0;">
-                        <div class="curved-inner-pro">
-                            <div class="curved-ctn">
-                                <h2>Inscripciones por mes</h2>
-                                <p><?= htmlspecialchars($label_mes_anterior, ENT_QUOTES, 'UTF-8') ?> frente a <?= htmlspecialchars($label_mes_actual, ENT_QUOTES, 'UTF-8') ?></p>
-                            </div>
+                        <div class="curved-ctn">
+                            <h2>Inscripciones por mes</h2>
+                            <p><?= htmlspecialchars($label_mes_anterior, ENT_QUOTES, 'UTF-8') ?> frente a <?= htmlspecialchars($label_mes_actual, ENT_QUOTES, 'UTF-8') ?></p>
                         </div>
                         <div style="position:relative; height:300px; margin-top:20px;">
-                            <canvas id="chartInscripciones"></canvas>
+                            <canvas id="chartInscripcionesLatam"></canvas>
                         </div>
                     </div>
                 </div>
@@ -335,10 +304,16 @@ require_once __DIR__ . '/includes/header.php';
                                     <div><strong><?= $incompletos ?></strong> registro(s) con datos incompletos.</div>
                                 </div>
                             <?php endif; ?>
-                            <?php if ($impagos_criticos > 0): ?>
+                            <?php if ($facturas_sin_pago > 0): ?>
                                 <div class="alert alert-danger d-flex align-items-center" role="alert">
+                                    <i class="fa-solid fa-file-invoice-dollar me-2"></i>
+                                    <div><strong><?= $facturas_sin_pago ?></strong> factura(s) emitidas sin pago asociado.</div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($descartadas > 0): ?>
+                                <div class="alert alert-secondary d-flex align-items-center" role="alert">
                                     <i class="fa-solid fa-ban me-2"></i>
-                                    <div><strong><?= $impagos_criticos ?></strong> inscripcion(es) facturada(s) sin pago.</div>
+                                    <div><strong><?= $descartadas ?></strong> registro(s) descartados.</div>
                                 </div>
                             <?php endif; ?>
                             <?php if ($novedades > 0): ?>
@@ -347,13 +322,7 @@ require_once __DIR__ . '/includes/header.php';
                                     <div><strong><?= $novedades ?></strong> registro(s) pendientes de revision.</div>
                                 </div>
                             <?php endif; ?>
-                            <?php if ($pendientes_pago > 0): ?>
-                                <div class="alert alert-warning d-flex align-items-center" role="alert">
-                                    <i class="fa-solid fa-clock me-2"></i>
-                                    <div><strong><?= $pendientes_pago ?></strong> inscripcion(es) pendientes de cobro.</div>
-                                </div>
-                            <?php endif; ?>
-                            <?php if ($incompletos === 0 && $impagos_criticos === 0 && $novedades === 0 && $pendientes_pago === 0): ?>
+                            <?php if ($incompletos === 0 && $facturas_sin_pago === 0 && $descartadas === 0 && $novedades === 0): ?>
                                 <div class="alert alert-success d-flex align-items-center" role="alert">
                                     <i class="fa-solid fa-circle-check me-2"></i>
                                     <div>Todo en orden. No hay alertas activas.</div>
@@ -372,12 +341,12 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="col-lg-12">
                     <div class="recent-post-wrapper notika-shadow" style="padding: 24px; margin-bottom: 30px;">
                         <div class="recent-post-title">
-                            <h2>Listado de inscripciones Espana</h2>
+                            <h2>Listado de inscripciones LATAM</h2>
                             <p>Se muestran <?= count($inscripciones) ?> registros</p>
                         </div>
                         <div class="recent-post-items" style="margin-top: 20px;">
                             <div class="table-responsive">
-                                <table id="tablaInscripciones" class="table table-striped table-hover align-middle" style="width:100%">
+                                <table id="tablaInscripcionesLatam" class="table table-striped table-hover align-middle" style="width:100%">
                                     <thead class="table-light">
                                         <tr>
                                             <th>#</th>
@@ -387,33 +356,29 @@ require_once __DIR__ . '/includes/header.php';
                                             <th>Empresa</th>
                                             <th>Inicio</th>
                                             <th>Canal</th>
-                                            <th>Bonif.</th>
-                                            <th>Fact.</th>
+                                            <th>Proforma</th>
                                             <th>Pagado</th>
-                                            <th>Email</th>
+                                            <th>Factura</th>
+                                            <th>Estado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php foreach ($inscripciones as $row): ?>
-                                        <?php $attendeeName = build_attendee_name($row); ?>
+                                        <?php $attendeeName = build_latam_attendee_name($row); ?>
                                         <tr class="<?= (int) $row['leido'] === 0 ? 'row-novedad' : '' ?>">
                                             <td><?= (int) $row['id'] ?></td>
-                                            <td><?= htmlspecialchars(format_datetime_value($row['fecha_inscripcion']), ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?= htmlspecialchars(format_latam_date($row['fecha_inscripcion']), ENT_QUOTES, 'UTF-8') ?></td>
                                             <td>
                                                 <?= htmlspecialchars($attendeeName, ENT_QUOTES, 'UTF-8') ?>
                                                 <?php if ((int) $row['leido'] === 0): ?>
                                                     <span class="badge bg-info ms-1">Nuevo</span>
                                                 <?php endif; ?>
-                                                <?php if (($row['baja'] ?? 'n') === 's'): ?>
-                                                    <span class="badge bg-secondary ms-1">Baja</span>
-                                                <?php endif; ?>
                                             </td>
-                                            <td><?= htmlspecialchars($row['curso_mostrado'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?= htmlspecialchars($row['curso'] !== '' ? $row['curso'] : ($row['accion_formativa'] !== '' ? $row['accion_formativa'] : 'Curso sin identificar'), ENT_QUOTES, 'UTF-8') ?></td>
                                             <td><?= htmlspecialchars($row['empresa_nombre'], ENT_QUOTES, 'UTF-8') ?></td>
-                                            <td><?= htmlspecialchars(format_short_date($row['f_ini']), ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?= htmlspecialchars(format_latam_date($row['f_ini']), ENT_QUOTES, 'UTF-8') ?></td>
                                             <td><?= htmlspecialchars($row['canal'] !== '' ? $row['canal'] : 'Sin canal', ENT_QUOTES, 'UTF-8') ?></td>
-                                            <td><span class="badge <?= (int) $row['bonificacion'] === 1 ? 'bg-success' : 'bg-light text-dark' ?>"><?= (int) $row['bonificacion'] === 1 ? 'Si' : 'No' ?></span></td>
-                                            <td><span class="badge <?= (int) $row['facturado'] === 1 ? 'bg-primary' : 'bg-light text-dark' ?>"><?= (int) $row['facturado'] === 1 ? 'Si' : 'No' ?></span></td>
+                                            <td><?= htmlspecialchars($row['proforma'] !== '' ? $row['proforma'] : '-', ENT_QUOTES, 'UTF-8') ?></td>
                                             <td>
                                                 <?php if ((int) $row['pagado'] === 1): ?>
                                                     <span class="badge bg-success">Pagado</span>
@@ -421,11 +386,14 @@ require_once __DIR__ . '/includes/header.php';
                                                     <span class="badge bg-warning text-dark">Pendiente</span>
                                                 <?php endif; ?>
                                             </td>
-                                            <td class="text-center">
-                                                <?php if ((int) $row['email_enviado'] === 1): ?>
-                                                    <i class="fa-solid fa-circle-check text-success badge-enviado" title="Enviado"></i>
+                                            <td><?= htmlspecialchars($row['factura'] !== '' ? $row['factura'] : '-', ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td>
+                                                <?php if ((int) $row['descartada'] === 1): ?>
+                                                    <span class="badge bg-secondary">Descartada</span>
+                                                <?php elseif (($row['baja'] ?? 'n') === 's'): ?>
+                                                    <span class="badge bg-dark">Baja</span>
                                                 <?php else: ?>
-                                                    <i class="fa-solid fa-circle-xmark text-muted badge-enviado" title="No enviado"></i>
+                                                    <span class="badge bg-success">Activa</span>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
@@ -449,7 +417,7 @@ $extra_js = [
 
 $inline_js = <<<JS
 document.addEventListener('DOMContentLoaded', function () {
-    $('#tablaInscripciones').DataTable({
+    $('#tablaInscripcionesLatam').DataTable({
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json'
         },
@@ -459,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function () {
         responsive: true
     });
 
-    const ctx = document.getElementById('chartInscripciones').getContext('2d');
+    const ctx = document.getElementById('chartInscripcionesLatam').getContext('2d');
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -507,7 +475,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function exportarCSV() {
-    const table = document.getElementById('tablaInscripciones');
+    const table = document.getElementById('tablaInscripcionesLatam');
     const rows = table.querySelectorAll('tr');
     const csv = [];
     rows.forEach(function (row) {
@@ -522,7 +490,7 @@ function exportarCSV() {
     const blob = new Blob(['\\uFEFF' + csv.join('\\n')], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'inscripciones_espana_' + new Date().toISOString().slice(0, 10) + '.csv';
+    link.download = 'inscripciones_latam_' + new Date().toISOString().slice(0, 10) + '.csv';
     link.click();
 }
 JS;

@@ -1,11 +1,11 @@
 <?php
 /**
- * Conexión a la base de datos MySQL (MariaDB / XAMPP)
- * Dashboard de Gestión Interna
+ * Conexion a la base de datos MySQL (MariaDB / XAMPP)
+ * Dashboard de Gestion Interna
  */
 
 $db_host = 'localhost';
-$db_name = 'dashboard_gestion';
+$db_name = 'dbs13710048';
 $db_user = 'root';
 $db_pass = '';
 
@@ -21,6 +21,6 @@ try {
         ]
     );
 } catch (PDOException $e) {
-    error_log('Error de conexión DB: ' . $e->getMessage());
+    error_log('Error de conexion DB: ' . $e->getMessage());
     die('Error al conectar con la base de datos. Contacte al administrador.');
 }
