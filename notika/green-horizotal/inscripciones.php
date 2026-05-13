@@ -57,6 +57,10 @@ $stmt = $pdo->prepare($sql_novedades);
 $stmt->execute($params);
 $novedades = (int) $stmt->fetchColumn();
 
+// Facturas Emitidas (todas las facturas en el sistema, independiente de filtros)
+$sql_facturas = "SELECT COUNT(*) FROM facturas";
+$total_facturas = (int) $pdo->query($sql_facturas)->fetchColumn();
+
 // ──────────────────────────────────────────────
 // DATOS PARA LA TABLA
 // ──────────────────────────────────────────────
@@ -321,7 +325,7 @@ $empresas = $pdo->query("SELECT DISTINCT empresa FROM inscripciones WHERE empres
         <div class="container">
             <div class="row g-4">
                 <!-- Total Inscripciones -->
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="kpi-card d-flex align-items-center gap-3">
                         <div class="kpi-icon bg-primary-green">
                             <i class="fa-solid fa-users"></i>
@@ -333,7 +337,7 @@ $empresas = $pdo->query("SELECT DISTINCT empresa FROM inscripciones WHERE empres
                     </div>
                 </div>
                 <!-- Pendientes de Pago -->
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="kpi-card d-flex align-items-center gap-3">
                         <div class="kpi-icon bg-warning-orange">
                             <i class="fa-solid fa-clock"></i>
@@ -345,7 +349,7 @@ $empresas = $pdo->query("SELECT DISTINCT empresa FROM inscripciones WHERE empres
                     </div>
                 </div>
                 <!-- Novedades -->
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="kpi-card d-flex align-items-center gap-3">
                         <div class="kpi-icon bg-info-blue">
                             <i class="fa-solid fa-bell"></i>
@@ -353,6 +357,18 @@ $empresas = $pdo->query("SELECT DISTINCT empresa FROM inscripciones WHERE empres
                         <div>
                             <h2><?= number_format($novedades, 0, ',', '.') ?></h2>
                             <p>Novedades (sin leer)</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Facturas Emitidas -->
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                    <div class="kpi-card d-flex align-items-center gap-3">
+                        <div class="kpi-icon" style="background: #9c27b0;">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                        </div>
+                        <div>
+                            <h2><?= number_format($total_facturas, 0, ',', '.') ?></h2>
+                            <p>Facturas Emitidas</p>
                         </div>
                     </div>
                 </div>
