@@ -46,15 +46,28 @@ function build_latam_attendee_name(array $row): string
 $filtro_anio = isset($_GET['anio']) ? (int) $_GET['anio'] : null;
 $filtro_empresa = isset($_GET['empresa']) ? trim($_GET['empresa']) : '';
 $filtro_pago = isset($_GET['pago']) ? trim($_GET['pago']) : '';
+$rango_grafica = isset($_GET['rango_grafica']) ? (int) $_GET['rango_grafica'] : 6;
+$rangos_grafica = [
+    2 => 'Vista de 2 meses',
+    6 => 'Vista de 6 meses',
+    12 => 'Vista de 12 meses',
+];
+if (!isset($rangos_grafica[$rango_grafica])) {
+    $rango_grafica = 6;
+}
 
 $baseFrom = "FROM inscripciones_latam i
 LEFT JOIN Empresas_latam e ON e.id = i.id_empresa";
+$fechaLatamSql = "COALESCE(
+    STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%Y'),
+    STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y')
+)";
 
 $where = [];
 $params = [];
 
 if ($filtro_anio) {
-    $where[] = "YEAR(STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y')) = :anio";
+    $where[] = "YEAR({$fechaLatamSql}) = :anio";
     $params[':anio'] = $filtro_anio;
 }
 if ($filtro_empresa !== '') {
@@ -91,39 +104,42 @@ $sqlTabla = "SELECT
     COALESCE(NULLIF(TRIM(e.razon_social), ''), 'Empresa no asociada') AS empresa_nombre
 {$baseFrom}
 {$whereSql}
-ORDER BY STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y') DESC, i.id DESC";
+ORDER BY {$fechaLatamSql} DESC, i.id DESC";
 $stmt = $pdo->prepare($sqlTabla);
 $stmt->execute($params);
 $inscripciones = $stmt->fetchAll();
 
-$mesActual = date('Y-m');
-$mesAnterior = date('Y-m', strtotime('-1 month'));
-$chartWhere = array_merge($where, ["STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y') IS NOT NULL"]);
-$chartParams = $params;
-$chartParams[':mes_actual'] = $mesActual;
-$chartParams[':mes_anterior'] = $mesAnterior;
-$chartSql = "SELECT DATE_FORMAT(STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y'), '%Y-%m') AS mes, COUNT(*) AS total
-{$baseFrom}";
-if ($chartWhere) {
-    $chartSql .= ' WHERE ' . implode(' AND ', $chartWhere);
+$chartReferenceWhere = array_merge($where, ["{$fechaLatamSql} IS NOT NULL"]);
+$chartReferenceSql = "SELECT MAX({$fechaLatamSql}) {$baseFrom}";
+if ($chartReferenceWhere) {
+    $chartReferenceSql .= ' WHERE ' . implode(' AND ', $chartReferenceWhere);
 }
-$chartSql .= " GROUP BY DATE_FORMAT(STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y'), '%Y-%m')
-HAVING mes IN (:mes_actual, :mes_anterior)
+$stmt = $pdo->prepare($chartReferenceSql);
+$stmt->execute($params);
+$fecha_referencia_raw = $stmt->fetchColumn();
+$fecha_referencia = $fecha_referencia_raw ? new DateTime($fecha_referencia_raw) : new DateTime();
+$fecha_referencia->modify('first day of this month');
+$fecha_inicio_grafica = (clone $fecha_referencia)->modify('-' . ($rango_grafica - 1) . ' months');
+$fecha_fin_grafica = (clone $fecha_referencia)->modify('first day of next month');
+
+$chartWhere = array_merge(
+    $where,
+    [
+        "{$fechaLatamSql} >= :fecha_inicio_chart",
+        "{$fechaLatamSql} < :fecha_fin_chart",
+    ]
+);
+$chartParams = $params;
+$chartParams[':fecha_inicio_chart'] = $fecha_inicio_grafica->format('Y-m-d');
+$chartParams[':fecha_fin_chart'] = $fecha_fin_grafica->format('Y-m-d');
+$chartSql = "SELECT DATE_FORMAT({$fechaLatamSql}, '%Y-%m') AS mes, COUNT(*) AS total
+{$baseFrom}
+WHERE " . implode(' AND ', $chartWhere) . "
+GROUP BY DATE_FORMAT({$fechaLatamSql}, '%Y-%m')
 ORDER BY mes";
 $stmt = $pdo->prepare($chartSql);
 $stmt->execute($chartParams);
 $chartData = $stmt->fetchAll();
-
-$inscripciones_mes_anterior = 0;
-$inscripciones_mes_actual = 0;
-foreach ($chartData as $row) {
-    if ($row['mes'] === $mesAnterior) {
-        $inscripciones_mes_anterior = (int) $row['total'];
-    }
-    if ($row['mes'] === $mesActual) {
-        $inscripciones_mes_actual = (int) $row['total'];
-    }
-}
 
 $incompletos = (int) $pdo->query(
     "SELECT COUNT(*)
@@ -147,9 +163,9 @@ $descartadas = (int) $pdo->query(
 )->fetchColumn();
 
 $anios = $pdo->query(
-    "SELECT DISTINCT YEAR(STR_TO_DATE(fecha_inscripcion, '%d/%m/%y')) AS anio
+    "SELECT DISTINCT YEAR(COALESCE(STR_TO_DATE(fecha_inscripcion, '%d/%m/%Y'), STR_TO_DATE(fecha_inscripcion, '%d/%m/%y'))) AS anio
      FROM inscripciones_latam
-     WHERE STR_TO_DATE(fecha_inscripcion, '%d/%m/%y') IS NOT NULL
+     WHERE COALESCE(STR_TO_DATE(fecha_inscripcion, '%d/%m/%Y'), STR_TO_DATE(fecha_inscripcion, '%d/%m/%y')) IS NOT NULL
      ORDER BY anio DESC"
 )->fetchAll();
 
@@ -174,8 +190,38 @@ $mesesEs = [
     11 => 'Noviembre',
     12 => 'Diciembre',
 ];
-$label_mes_anterior = $mesesEs[(int) date('n', strtotime('-1 month'))] . ' ' . date('Y', strtotime('-1 month'));
-$label_mes_actual = $mesesEs[(int) date('n')] . ' ' . date('Y');
+$mesesAbrev = [
+    1 => 'Ene',
+    2 => 'Feb',
+    3 => 'Mar',
+    4 => 'Abr',
+    5 => 'May',
+    6 => 'Jun',
+    7 => 'Jul',
+    8 => 'Ago',
+    9 => 'Sep',
+    10 => 'Oct',
+    11 => 'Nov',
+    12 => 'Dic',
+];
+$chartMap = [];
+foreach ($chartData as $row) {
+    $chartMap[$row['mes']] = (int) $row['total'];
+}
+
+$chart_labels = [];
+$chart_values = [];
+$cursorMes = clone $fecha_inicio_grafica;
+while ($cursorMes < $fecha_fin_grafica) {
+    $mesClave = $cursorMes->format('Y-m');
+    $chart_labels[] = $mesesAbrev[(int) $cursorMes->format('n')] . ' ' . $cursorMes->format('Y');
+    $chart_values[] = $chartMap[$mesClave] ?? 0;
+    $cursorMes->modify('+1 month');
+}
+
+$chart_labels_js = json_encode($chart_labels);
+$chart_values_js = json_encode($chart_values);
+$chart_subtitle = $rangos_grafica[$rango_grafica] . ' hasta ' . end($chart_labels);
 
 $page_title = 'Inscripciones LATAM';
 $active_page = 'inscripciones_latam';
@@ -234,44 +280,52 @@ require_once __DIR__ . '/includes/header.php';
         <div class="filter-section">
             <h6 class="mb-3"><i class="fa-solid fa-filter me-2"></i>Filtros</h6>
             <form method="GET" action="inscripciones_latam.php" id="formFiltros">
-                <div class="row g-3 align-items-end">
+                <div class="row g-3 align-items-end filter-form-row">
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                        <label for="filtroAnio" class="form-label">Ano</label>
-                        <select name="anio" id="filtroAnio" class="form-select form-select-sm">
-                            <option value="">Todos</option>
-                            <?php foreach ($anios as $anio): ?>
-                                <option value="<?= (int) $anio['anio'] ?>" <?= $filtro_anio === (int) $anio['anio'] ? 'selected' : '' ?>>
-                                    <?= (int) $anio['anio'] ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="filter-field">
+                            <label for="filtroAnio" class="form-label">A&ntilde;o</label>
+                            <select name="anio" id="filtroAnio" class="form-select form-select-sm">
+                                <option value="">Todos</option>
+                                <?php foreach ($anios as $anio): ?>
+                                    <option value="<?= (int) $anio['anio'] ?>" <?= $filtro_anio === (int) $anio['anio'] ? 'selected' : '' ?>>
+                                        <?= (int) $anio['anio'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                        <label for="filtroEmpresa" class="form-label">Empresa</label>
-                        <select name="empresa" id="filtroEmpresa" class="form-select form-select-sm">
-                            <option value="">Todas</option>
-                            <?php foreach ($empresas as $empresa): ?>
-                                <option value="<?= htmlspecialchars($empresa['empresa'], ENT_QUOTES, 'UTF-8') ?>" <?= $filtro_empresa === $empresa['empresa'] ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars($empresa['empresa'], ENT_QUOTES, 'UTF-8') ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="filter-field">
+                            <label for="filtroEmpresa" class="form-label">Empresa</label>
+                            <select name="empresa" id="filtroEmpresa" class="form-select form-select-sm">
+                                <option value="">Todas</option>
+                                <?php foreach ($empresas as $empresa): ?>
+                                    <option value="<?= htmlspecialchars($empresa['empresa'], ENT_QUOTES, 'UTF-8') ?>" <?= $filtro_empresa === $empresa['empresa'] ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($empresa['empresa'], ENT_QUOTES, 'UTF-8') ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                        <label for="filtroPago" class="form-label">Estado de pago</label>
-                        <select name="pago" id="filtroPago" class="form-select form-select-sm">
-                            <option value="">Todos</option>
-                            <option value="1" <?= $filtro_pago === '1' ? 'selected' : '' ?>>Pagado</option>
-                            <option value="0" <?= $filtro_pago === '0' ? 'selected' : '' ?>>Pendiente</option>
-                        </select>
+                        <div class="filter-field">
+                            <label for="filtroPago" class="form-label">Estado de pago</label>
+                            <select name="pago" id="filtroPago" class="form-select form-select-sm">
+                                <option value="">Todos</option>
+                                <option value="1" <?= $filtro_pago === '1' ? 'selected' : '' ?>>Pagado</option>
+                                <option value="0" <?= $filtro_pago === '0' ? 'selected' : '' ?>>Pendiente</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-6 col-12">
-                        <button type="submit" class="btn btn-sm text-white" style="background:#00c292;">
-                            <i class="fa-solid fa-magnifying-glass me-1"></i> Filtrar
-                        </button>
-                        <a href="inscripciones_latam.php" class="btn btn-sm btn-outline-secondary ms-1">
-                            <i class="fa-solid fa-rotate-left me-1"></i> Limpiar
-                        </a>
+                        <div class="filter-actions">
+                            <button type="submit" class="btn btn-filter-primary">
+                                <i class="fa-solid fa-magnifying-glass"></i> Filtrar
+                            </button>
+                            <a href="inscripciones_latam.php" class="btn btn-filter-secondary">
+                                <i class="fa-solid fa-rotate-left"></i> Limpiar
+                            </a>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -283,9 +337,32 @@ require_once __DIR__ . '/includes/header.php';
             <div class="row">
                 <div class="col-lg-8 col-md-7 col-sm-12">
                     <div class="sale-statistic-inner notika-shadow" style="padding: 24px; margin: 30px 0;">
-                        <div class="curved-ctn">
-                            <h2>Inscripciones por mes</h2>
-                            <p><?= htmlspecialchars($label_mes_anterior, ENT_QUOTES, 'UTF-8') ?> frente a <?= htmlspecialchars($label_mes_actual, ENT_QUOTES, 'UTF-8') ?></p>
+                        <div class="chart-toolbar">
+                            <div class="curved-ctn">
+                                <h2>Inscripciones por mes</h2>
+                                <p><?= htmlspecialchars($chart_subtitle, ENT_QUOTES, 'UTF-8') ?></p>
+                            </div>
+                            <form method="GET" action="inscripciones_latam.php" class="chart-range-form">
+                                <?php if ($filtro_anio): ?>
+                                    <input type="hidden" name="anio" value="<?= (int) $filtro_anio ?>">
+                                <?php endif; ?>
+                                <?php if ($filtro_empresa !== ''): ?>
+                                    <input type="hidden" name="empresa" value="<?= htmlspecialchars($filtro_empresa, ENT_QUOTES, 'UTF-8') ?>">
+                                <?php endif; ?>
+                                <?php if ($filtro_pago !== ''): ?>
+                                    <input type="hidden" name="pago" value="<?= htmlspecialchars($filtro_pago, ENT_QUOTES, 'UTF-8') ?>">
+                                <?php endif; ?>
+                                <div class="chart-range-group">
+                                    <label for="rangoGraficaLatam" class="form-label">Vista de la gr&aacute;fica</label>
+                                    <select name="rango_grafica" id="rangoGraficaLatam" class="form-select form-select-sm" onchange="this.form.submit()">
+                                        <?php foreach ($rangos_grafica as $valorRango => $textoRango): ?>
+                                            <option value="<?= $valorRango ?>" <?= $rango_grafica === $valorRango ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars($textoRango, ENT_QUOTES, 'UTF-8') ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </form>
                         </div>
                         <div style="position:relative; height:300px; margin-top:20px;">
                             <canvas id="chartInscripcionesLatam"></canvas>
@@ -428,18 +505,28 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const ctx = document.getElementById('chartInscripcionesLatam').getContext('2d');
+    const chartLabels = {$chart_labels_js};
+    const chartValues = {$chart_values_js};
+    const chartColors = chartLabels.map(function (_, index) {
+        return index === chartLabels.length - 1 ? 'rgba(0, 194, 146, 0.78)' : 'rgba(3, 169, 243, 0.58)';
+    });
+    const chartBorders = chartLabels.map(function (_, index) {
+        return index === chartLabels.length - 1 ? '#00c292' : '#03a9f3';
+    });
+
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['{$label_mes_anterior}', '{$label_mes_actual}'],
+            labels: chartLabels,
             datasets: [{
                 label: 'Inscripciones',
-                data: [{$inscripciones_mes_anterior}, {$inscripciones_mes_actual}],
-                backgroundColor: ['rgba(3, 169, 243, 0.7)', 'rgba(0, 194, 146, 0.7)'],
-                borderColor: ['#03a9f3', '#00c292'],
+                data: chartValues,
+                backgroundColor: chartColors,
+                borderColor: chartBorders,
                 borderWidth: 2,
                 borderRadius: 8,
-                barPercentage: 0.5
+                barPercentage: 0.62,
+                maxBarThickness: 52
             }]
         },
         options: {

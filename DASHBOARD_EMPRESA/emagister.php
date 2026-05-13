@@ -151,28 +151,32 @@ require_once __DIR__ . '/includes/header.php';
         <div class="filter-section">
             <h6 class="mb-3"><i class="fa-solid fa-filter me-2"></i>Filtros</h6>
             <form method="GET" action="emagister.php" id="formFiltros">
-                <div class="row g-3 align-items-end">
+                <div class="row g-3 align-items-end filter-form-row">
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                        <label for="filtroAnio" class="form-label">Ano</label>
-                        <select name="anio" id="filtroAnio" class="form-select form-select-sm">
-                            <option value="">Todos</option>
-                            <?php foreach ($anios as $anio): ?>
-                                <option value="<?= (int) $anio['anio'] ?>" <?= $filtro_anio === (int) $anio['anio'] ? 'selected' : '' ?>>
-                                    <?= (int) $anio['anio'] ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="filter-field">
+                            <label for="filtroAnio" class="form-label">A&ntilde;o</label>
+                            <select name="anio" id="filtroAnio" class="form-select form-select-sm">
+                                <option value="">Todos</option>
+                                <?php foreach ($anios as $anio): ?>
+                                    <option value="<?= (int) $anio['anio'] ?>" <?= $filtro_anio === (int) $anio['anio'] ? 'selected' : '' ?>>
+                                        <?= (int) $anio['anio'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                        <label for="filtroPais" class="form-label">Pais</label>
-                        <select name="pais" id="filtroPais" class="form-select form-select-sm">
-                            <option value="">Todos</option>
-                            <?php foreach ($paises as $pais): ?>
-                                <option value="<?= htmlspecialchars($pais['pais'], ENT_QUOTES, 'UTF-8') ?>" <?= $filtro_pais === $pais['pais'] ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars($pais['pais'], ENT_QUOTES, 'UTF-8') ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="filter-field">
+                            <label for="filtroPais" class="form-label">Pais</label>
+                            <select name="pais" id="filtroPais" class="form-select form-select-sm">
+                                <option value="">Todos</option>
+                                <?php foreach ($paises as $pais): ?>
+                                    <option value="<?= htmlspecialchars($pais['pais'], ENT_QUOTES, 'UTF-8') ?>" <?= $filtro_pais === $pais['pais'] ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($pais['pais'], ENT_QUOTES, 'UTF-8') ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                         <div class="kpi-card h-100" style="padding:16px 18px;">
@@ -181,12 +185,14 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-6 col-12">
-                        <button type="submit" class="btn btn-sm text-white" style="background:#00c292;">
-                            <i class="fa-solid fa-magnifying-glass me-1"></i> Filtrar
-                        </button>
-                        <a href="emagister.php" class="btn btn-sm btn-outline-secondary ms-1">
-                            <i class="fa-solid fa-rotate-left me-1"></i> Limpiar
-                        </a>
+                        <div class="filter-actions">
+                            <button type="submit" class="btn btn-filter-primary">
+                                <i class="fa-solid fa-magnifying-glass"></i> Filtrar
+                            </button>
+                            <a href="emagister.php" class="btn btn-filter-secondary">
+                                <i class="fa-solid fa-rotate-left"></i> Limpiar
+                            </a>
+                        </div>
                     </div>
                 </div>
             </form>
