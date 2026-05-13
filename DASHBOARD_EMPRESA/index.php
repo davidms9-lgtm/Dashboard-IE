@@ -17,7 +17,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="col-12">
                 <div class="welcome-card">
                     <h2><i class="fa-solid fa-chart-column me-2"></i>Dashboard operativo</h2>
-                    <p>Modulos separados para Espana, LATAM y captacion comercial sobre la base de prueba de empresa.</p>
+                    <p>M&oacute;dulos separados para Espa&ntilde;a, LATAM y captaci&oacute;n comercial sobre la base de prueba de empresa.</p>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@ require_once __DIR__ . '/includes/header.php';
                     <i class="fa-solid fa-user-plus d-block"></i>
                     <h5>Inscripciones ES</h5>
                     <p class="text-muted mt-2 mb-0" style="font-size:13px;">
-                        Seguimiento de inscripciones y cobros de Espana
+                        Seguimiento de inscripciones y cobros de Espa&ntilde;a
                     </p>
                 </a>
             </div>
@@ -48,7 +48,7 @@ require_once __DIR__ . '/includes/header.php';
                     <i class="fa-solid fa-graduation-cap d-block"></i>
                     <h5>Emagister</h5>
                     <p class="text-muted mt-2 mb-0" style="font-size:13px;">
-                        Leads de captacion con filtros por fecha y pais
+                        Leads de captaci&oacute;n con filtros por fecha y pa&iacute;s
                     </p>
                 </a>
             </div>

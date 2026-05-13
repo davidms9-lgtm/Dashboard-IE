@@ -444,7 +444,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="col-lg-12">
                     <div class="recent-post-wrapper notika-shadow" style="padding: 24px; margin-bottom: 30px;">
                         <div class="recent-post-title">
-                            <h2>Listado de inscripciones Espana</h2>
+                            <h2>Listado de inscripciones Espa&ntilde;a</h2>
                             <p>Se muestran <?= count($inscripciones) ?> registros</p>
                         </div>
                         <div class="recent-post-items" style="margin-top: 20px;">

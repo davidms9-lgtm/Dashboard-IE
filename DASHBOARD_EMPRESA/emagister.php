@@ -168,7 +168,7 @@ require_once __DIR__ . '/includes/header.php';
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                         <div class="filter-field">
-                            <label for="filtroPais" class="form-label">Pais</label>
+                            <label for="filtroPais" class="form-label">Pa&iacute;s</label>
                             <select name="pais" id="filtroPais" class="form-select form-select-sm">
                                 <option value="">Todos</option>
                                 <?php foreach ($paises as $pais): ?>
@@ -182,7 +182,7 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                         <div class="kpi-card h-100" style="padding:16px 18px;">
                             <h2 style="font-size:22px;"><?= number_format($paises_activos, 0, ',', '.') ?></h2>
-                            <p style="margin-top:4px;">Paises activos</p>
+                            <p style="margin-top:4px;">Pa&iacute;ses activos</p>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-12 col-sm-6 col-12">
@@ -242,7 +242,7 @@ require_once __DIR__ . '/includes/header.php';
                                             <th>Nombre</th>
                                             <th>Email</th>
                                             <th>Telefono</th>
-                                            <th>Pais</th>
+                                            <th>Pa&iacute;s</th>
                                             <th>Provincia</th>
                                             <th>Curso</th>
                                             <th>Enviado</th>
