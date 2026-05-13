@@ -140,7 +140,7 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                         <div>
                             <h2><?= htmlspecialchars((string) $ratio_contacto, ENT_QUOTES, 'UTF-8') ?>%</h2>
-                            <p>Ratio de envio</p>
+                            <p>Ratio de env&iacute;o</p>
                         </div>
                     </div>
                 </div>
@@ -205,7 +205,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="col-lg-4 col-md-6 col-12">
                 <div class="alert alert-warning mb-0" role="alert">
                     <i class="fa-solid fa-clock me-2"></i>
-                    Pendientes de envio: <strong><?= $pendientes_envio ?></strong>
+                    Pendientes de env&iacute;o: <strong><?= $pendientes_envio ?></strong>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 col-12">
@@ -241,7 +241,7 @@ require_once __DIR__ . '/includes/header.php';
                                             <th>Fecha</th>
                                             <th>Nombre</th>
                                             <th>Email</th>
-                                            <th>Telefono</th>
+                                            <th>Tel&eacute;fono</th>
                                             <th>Pa&iacute;s</th>
                                             <th>Provincia</th>
                                             <th>Curso</th>
