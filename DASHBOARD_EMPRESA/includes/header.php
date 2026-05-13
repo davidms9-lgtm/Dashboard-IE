@@ -17,6 +17,7 @@ $breadcrumb_title = $breadcrumb_title ?? $page_title;
 $breadcrumb_desc = $breadcrumb_desc ?? '';
 $breadcrumb_icon = $breadcrumb_icon ?? 'fa-solid fa-house';
 $extra_css = $extra_css ?? '';
+$is_inscripciones_active = in_array($active_page, ['inscripciones_espana', 'inscripciones_latam'], true);
 
 $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
 ?>
@@ -87,15 +88,28 @@ $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
                             <i class="fa-solid fa-house"></i> <span>Inicio</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $active_page === 'inscripciones_espana' ? 'active' : '' ?>" href="<?= $base ?>/inscripciones.php">
-                            <i class="fa-solid fa-user-plus"></i> <span>Inscripciones ES</span>
+                    <li class="nav-item dropdown dashboard-nav-dropdown">
+                        <a class="nav-link dropdown-toggle <?= $is_inscripciones_active ? 'active' : '' ?>"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <i class="fa-solid fa-user-plus"></i> <span>Inscripciones</span>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $active_page === 'inscripciones_latam' ? 'active' : '' ?>" href="<?= $base ?>/inscripciones_latam.php">
-                            <i class="fa-solid fa-earth-americas"></i> <span>Inscripciones LATAM</span>
-                        </a>
+                        <ul class="dropdown-menu dashboard-dropdown-menu">
+                            <li>
+                                <a class="dropdown-item <?= $active_page === 'inscripciones_espana' ? 'active' : '' ?>"
+                                   href="<?= $base ?>/inscripciones.php">
+                                    <i class="fa-solid fa-building me-2"></i> España
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item <?= $active_page === 'inscripciones_latam' ? 'active' : '' ?>"
+                                   href="<?= $base ?>/inscripciones_latam.php">
+                                    <i class="fa-solid fa-earth-americas me-2"></i> LATAM
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= $active_page === 'emagister' ? 'active' : '' ?>" href="<?= $base ?>/emagister.php">
@@ -117,12 +131,22 @@ $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
                 <a class="nav-link px-3 py-2 border-bottom <?= $active_page === 'inicio' ? 'active' : '' ?>" href="<?= $base ?>/index.php">
                     <i class="fa-solid fa-house me-2"></i> Inicio
                 </a>
-                <a class="nav-link px-3 py-2 border-bottom <?= $active_page === 'inscripciones_espana' ? 'active' : '' ?>" href="<?= $base ?>/inscripciones.php">
-                    <i class="fa-solid fa-user-plus me-2"></i> Inscripciones ES
-                </a>
-                <a class="nav-link px-3 py-2 border-bottom <?= $active_page === 'inscripciones_latam' ? 'active' : '' ?>" href="<?= $base ?>/inscripciones_latam.php">
-                    <i class="fa-solid fa-earth-americas me-2"></i> Inscripciones LATAM
-                </a>
+                <button class="nav-link px-3 py-2 border-bottom d-flex align-items-center justify-content-between w-100 mobile-subnav-toggle <?= $is_inscripciones_active ? 'active' : '' ?>"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#mobileInscripcionesMenu"
+                        aria-expanded="<?= $is_inscripciones_active ? 'true' : 'false' ?>">
+                    <span><i class="fa-solid fa-user-plus me-2"></i> Inscripciones</span>
+                    <i class="fa-solid fa-chevron-down small"></i>
+                </button>
+                <div class="collapse <?= $is_inscripciones_active ? 'show' : '' ?>" id="mobileInscripcionesMenu">
+                    <a class="nav-link px-3 py-2 border-bottom mobile-subnav-link <?= $active_page === 'inscripciones_espana' ? 'active' : '' ?>" href="<?= $base ?>/inscripciones.php">
+                        <i class="fa-solid fa-building me-2"></i> España
+                    </a>
+                    <a class="nav-link px-3 py-2 border-bottom mobile-subnav-link <?= $active_page === 'inscripciones_latam' ? 'active' : '' ?>" href="<?= $base ?>/inscripciones_latam.php">
+                        <i class="fa-solid fa-earth-americas me-2"></i> LATAM
+                    </a>
+                </div>
                 <a class="nav-link px-3 py-2 border-bottom <?= $active_page === 'emagister' ? 'active' : '' ?>" href="<?= $base ?>/emagister.php">
                     <i class="fa-solid fa-graduation-cap me-2"></i> Emagister
                 </a>

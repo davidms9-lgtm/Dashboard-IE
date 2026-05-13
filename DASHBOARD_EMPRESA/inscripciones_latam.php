@@ -235,6 +235,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
     <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
 
     <div class="notika-status-area" style="margin-top: 30px;">
         <div class="container">
@@ -422,7 +423,7 @@ require_once __DIR__ . '/includes/header.php';
                             <p>Se muestran <?= count($inscripciones) ?> registros</p>
                         </div>
                         <div class="recent-post-items" style="margin-top: 20px;">
-                            <div class="table-responsive">
+                            <div class="dashboard-table-shell">
                                 <table id="tablaInscripcionesLatam" class="table table-striped table-hover align-middle" style="width:100%">
                                     <thead class="table-light">
                                         <tr>
@@ -489,6 +490,8 @@ require_once __DIR__ . '/includes/header.php';
 $extra_js = [
     'https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js',
     'https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js',
+    'https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js',
+    'https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js',
     'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js',
 ];
 
@@ -496,12 +499,23 @@ $inline_js = <<<JS
 document.addEventListener('DOMContentLoaded', function () {
     $('#tablaInscripcionesLatam').DataTable({
         language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json'
+            url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json',
+            search: '',
+            searchPlaceholder: 'Buscar en la tabla'
         },
         pageLength: 15,
         lengthMenu: [10, 15, 25, 50, 100],
         order: [[1, 'desc']],
-        responsive: true
+        autoWidth: false,
+        scrollX: false,
+        responsive: true,
+        pagingType: 'simple_numbers',
+        dom: "<'dt-toolbar row align-items-center g-3'<'col-sm-12 col-lg-6'l><'col-sm-12 col-lg-6'f>>" +
+             "t" +
+             "<'dt-footer row align-items-center g-3'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
+        infoCallback: function(settings, start, end, max, total) {
+            return 'Mostrando ' + total + ' registro' + (total === 1 ? '' : 's');
+        }
     });
 
     const ctx = document.getElementById('chartInscripcionesLatam').getContext('2d');
