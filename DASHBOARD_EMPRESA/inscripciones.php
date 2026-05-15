@@ -75,7 +75,10 @@ $baseFrom = "FROM inscripciones i
 LEFT JOIN Empresas e ON e.id = i.id_empresa
 LEFT JOIN Cursos c ON c.id_curso = i.id_curso";
 
-$where = [];
+$where = [
+    "i.prova <> 's'",
+    "(e.prova IS NULL OR e.prova = 0)",
+];
 $params = [];
 
 if ($filtro_anio) {
@@ -164,33 +167,27 @@ $stmt = $pdo->prepare($chartSql);
 $stmt->execute($chartParams);
 $chartData = $stmt->fetchAll();
 
-$incompletos = (int) $pdo->query(
-    "SELECT COUNT(*)
-     FROM inscripciones i
-     LEFT JOIN Empresas e ON e.id = i.id_empresa
-     WHERE NULLIF(TRIM(COALESCE(e.razon_social, '')), '') IS NULL
-        OR (
-            NULLIF(TRIM(COALESCE(i.nombre_asistente, '')), '') IS NULL
-            AND NULLIF(TRIM(COALESCE(i.nombre_alumno, '')), '') IS NULL
-        )
-        OR (
-            NULLIF(TRIM(COALESCE(i.curso, '')), '') IS NULL
-            AND NULLIF(TRIM(COALESCE(i.accion_formativa, '')), '') IS NULL
-            AND NULLIF(TRIM(COALESCE(i.accion_formativa_externa, '')), '') IS NULL
-            AND NULLIF(TRIM(COALESCE(i.id_curso, '')), '') IS NULL
-        )"
-)->fetchColumn();
-
-$impagos_criticos = (int) $pdo->query(
-    "SELECT COUNT(*)
-     FROM inscripciones
-     WHERE facturado = 1 AND pagado = 0"
-)->fetchColumn();
+$incompletosCondition = "(
+    NULLIF(TRIM(COALESCE(e.razon_social, '')), '') IS NULL
+    OR (
+        NULLIF(TRIM(COALESCE(i.nombre_asistente, '')), '') IS NULL
+        AND NULLIF(TRIM(COALESCE(i.nombre_alumno, '')), '') IS NULL
+    )
+    OR (
+        NULLIF(TRIM(COALESCE(i.curso, '')), '') IS NULL
+        AND NULLIF(TRIM(COALESCE(i.accion_formativa, '')), '') IS NULL
+        AND NULLIF(TRIM(COALESCE(i.accion_formativa_externa, '')), '') IS NULL
+        AND NULLIF(TRIM(COALESCE(i.id_curso, '')), '') IS NULL
+    )
+)";
+$incompletos = fetch_count($pdo, $baseFrom, array_merge($where, [$incompletosCondition]), $params);
+$impagos_criticos = fetch_count($pdo, $baseFrom, array_merge($where, ['i.facturado = 1', 'i.pagado = 0']), $params);
 
 $anios = $pdo->query(
     "SELECT DISTINCT YEAR(fecha_inscripcion) AS anio
      FROM inscripciones
      WHERE fecha_inscripcion IS NOT NULL
+       AND prova <> 's'
      ORDER BY anio DESC"
 )->fetchAll();
 
@@ -198,6 +195,7 @@ $empresas = $pdo->query(
     "SELECT DISTINCT razon_social AS empresa
      FROM Empresas
      WHERE TRIM(COALESCE(razon_social, '')) <> ''
+       AND prova = 0
      ORDER BY razon_social"
 )->fetchAll();
 

@@ -76,23 +76,40 @@ $paises = $pdo->query(
      ORDER BY pais"
 )->fetchAll();
 
-$sin_email = (int) $pdo->query(
-    "SELECT COUNT(*)
-     FROM emagister
-     WHERE NULLIF(TRIM(COALESCE(email, '')), '') IS NULL"
-)->fetchColumn();
+function fetch_emagister_count(PDO $pdo, string $select, string $fromSql, array $where, array $params): int
+{
+    $sql = "SELECT {$select} {$fromSql}";
+    if ($where) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
+    }
 
-$sin_telefono = (int) $pdo->query(
-    "SELECT COUNT(*)
-     FROM emagister
-     WHERE NULLIF(TRIM(COALESCE(telefono, '')), '') IS NULL"
-)->fetchColumn();
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
 
-$paises_activos = (int) $pdo->query(
-    "SELECT COUNT(DISTINCT pais)
-     FROM emagister
-     WHERE TRIM(COALESCE(pais, '')) <> ''"
-)->fetchColumn();
+    return (int) $stmt->fetchColumn();
+}
+
+$sin_email = fetch_emagister_count(
+    $pdo,
+    'COUNT(*)',
+    $baseFrom,
+    array_merge($where, ["NULLIF(TRIM(COALESCE(e.email, '')), '') IS NULL"]),
+    $params
+);
+$sin_telefono = fetch_emagister_count(
+    $pdo,
+    'COUNT(*)',
+    $baseFrom,
+    array_merge($where, ["NULLIF(TRIM(COALESCE(e.telefono, '')), '') IS NULL"]),
+    $params
+);
+$paises_activos = fetch_emagister_count(
+    $pdo,
+    'COUNT(DISTINCT e.pais)',
+    $baseFrom,
+    array_merge($where, ["TRIM(COALESCE(e.pais, '')) <> ''"]),
+    $params
+);
 
 $page_title = 'Emagister';
 $active_page = 'emagister';

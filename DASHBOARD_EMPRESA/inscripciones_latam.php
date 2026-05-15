@@ -63,7 +63,10 @@ $fechaLatamSql = "COALESCE(
     STR_TO_DATE(i.fecha_inscripcion, '%d/%m/%y')
 )";
 
-$where = [];
+$where = [
+    'i.prova = 0',
+    '(e.prova IS NULL OR e.prova = 0)',
+];
 $params = [];
 
 if ($filtro_anio) {
@@ -141,31 +144,20 @@ $stmt = $pdo->prepare($chartSql);
 $stmt->execute($chartParams);
 $chartData = $stmt->fetchAll();
 
-$incompletos = (int) $pdo->query(
-    "SELECT COUNT(*)
-     FROM inscripciones_latam i
-     LEFT JOIN Empresas_latam e ON e.id = i.id_empresa
-     WHERE NULLIF(TRIM(COALESCE(e.razon_social, '')), '') IS NULL
-        OR NULLIF(TRIM(COALESCE(i.nombre_asistente, '')), '') IS NULL
-        OR NULLIF(TRIM(COALESCE(i.curso, '')), '') IS NULL"
-)->fetchColumn();
-
-$facturas_sin_pago = (int) $pdo->query(
-    "SELECT COUNT(*)
-     FROM inscripciones_latam
-     WHERE TRIM(COALESCE(factura, '')) <> '' AND pagado = 0"
-)->fetchColumn();
-
-$descartadas = (int) $pdo->query(
-    "SELECT COUNT(*)
-     FROM inscripciones_latam
-     WHERE descartada = 1"
-)->fetchColumn();
+$incompletosCondition = "(
+    NULLIF(TRIM(COALESCE(e.razon_social, '')), '') IS NULL
+    OR NULLIF(TRIM(COALESCE(i.nombre_asistente, '')), '') IS NULL
+    OR NULLIF(TRIM(COALESCE(i.curso, '')), '') IS NULL
+)";
+$incompletos = fetch_count_latam($pdo, $baseFrom, array_merge($where, [$incompletosCondition]), $params);
+$facturas_sin_pago = fetch_count_latam($pdo, $baseFrom, array_merge($where, ["TRIM(COALESCE(i.factura, '')) <> ''", 'i.pagado = 0']), $params);
+$descartadas = fetch_count_latam($pdo, $baseFrom, array_merge($where, ['i.descartada = 1']), $params);
 
 $anios = $pdo->query(
     "SELECT DISTINCT YEAR(COALESCE(STR_TO_DATE(fecha_inscripcion, '%d/%m/%Y'), STR_TO_DATE(fecha_inscripcion, '%d/%m/%y'))) AS anio
      FROM inscripciones_latam
      WHERE COALESCE(STR_TO_DATE(fecha_inscripcion, '%d/%m/%Y'), STR_TO_DATE(fecha_inscripcion, '%d/%m/%y')) IS NOT NULL
+       AND prova = 0
      ORDER BY anio DESC"
 )->fetchAll();
 
@@ -173,6 +165,7 @@ $empresas = $pdo->query(
     "SELECT DISTINCT razon_social AS empresa
      FROM Empresas_latam
      WHERE TRIM(COALESCE(razon_social, '')) <> ''
+       AND prova = 0
      ORDER BY razon_social"
 )->fetchAll();
 
