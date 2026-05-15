@@ -50,6 +50,65 @@
     background: #03a9f3;
 }
 
+.kpi-icon.bg-dark-slate {
+    background: #475569;
+}
+
+.kpi-icon.bg-danger-red {
+    background: #ef4444;
+}
+
+.kpi-icon.bg-purple-soft {
+    background: #8b5cf6;
+}
+
+.home-mini-table {
+    width: 100%;
+    margin: 0;
+}
+
+.home-mini-table th {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: #64748b;
+    background: #f8fafc;
+}
+
+.home-mini-table td {
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.home-empty {
+    text-align: center;
+    color: #94a3b8;
+    padding: 28px 0;
+    font-size: 14px;
+}
+
+.country-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .04em;
+}
+
+.country-badge.es {
+    background: rgba(0, 194, 146, .12);
+    color: #009f77;
+}
+
+.country-badge.latam {
+    background: rgba(3, 169, 243, .15);
+    color: #0277bd;
+}
+
 .row-novedad {
     background-color: #fff8e1 !important;
 }

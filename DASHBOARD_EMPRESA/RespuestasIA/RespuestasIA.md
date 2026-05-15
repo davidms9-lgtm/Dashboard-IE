@@ -37,8 +37,7 @@ El PDF es explícito en su sección 17: durante las primeras 2 semanas no se deb
 ¿Por dónde quieres tirar?
 
 /////////////////////////////////////////////////
-REVISAR PARTE FINAL DE LA RESPUESTA
-
+REVISAR PARTE FINAL DE LA RESPUESTAst
 Bugs corregidos
 1. Registros de prueba (prova) se colaban en la vista de producción
 La BD usa una columna prova (varchar en inscripciones, tinyint en el resto) para marcar registros de prueba que no deberían contar como inscripciones reales. Ninguna consulta lo filtraba.
@@ -65,3 +64,50 @@ Hay tres cosas que parecen "bugs" pero son decisiones de negocio, no decido yo:
 ¿Las inscripciones con descartada=1 (solo LATAM) cuentan en "Total"? Hoy se cuentan. La alerta dice "X descartadas" como aviso, pero las suma igual.
 Footer dice "Template by Colorlib" en includes/footer.php:8. Para un dashboard interno de empresa probablemente quieras quitarlo.
 Dime cuál es la siguiente faena.
+
+/////////////////////////////////////////////////
+
+Lo que tienes ahora en DASHBOARD_EMPRESA/index.php
+
+┌────────────────────────────────────────────────────────┐
+│ Filtros globales:  [Año ▼]            [Limpiar]        │
+├────────────────────────────────────────────────────────┤
+│ KPIs operativos (fila 1):                              │
+│  Total inscr. │ Este mes │ Pendientes │ Empresas       │
+├────────────────────────────────────────────────────────┤
+│ KPIs financieros + extras (fila 2):                    │
+│  Facturado €  │ Abonado € │ Leads Emag. │ Alertas      │
+├────────────────────────────────────────────────────────┤
+│ Evolución 12 meses (barras apiladas      │   Donut     │
+│  España + LATAM)  col-lg-8               │  ES vs LATAM│
+├────────────────────────────────────────────────────────┤
+│ Top 5 empresas       │  Últimas 10 inscripciones       │
+│ (cruza ES + LATAM)   │  (mezcla ES + LATAM)            │
+├────────────────────────────────────────────────────────┤
+│ Resumen alertas: impagos ES · facturas LATAM · descart.│
+└────────────────────────────────────────────────────────┘
+Características clave:
+
+8 KPIs consolidados ES + LATAM, igual de exigentes con el filtro de año y el filtro prova que los módulos individuales
+Filtro global año se aplica a todo: KPIs, gráfica, tablas, alertas. Auto-submit al cambiar.
+Gráfica apilada (Chart.js stacked bar) con tooltip que muestra el total ES+LATAM del mes
+Donut con % ES vs LATAM. Si no hay datos, muestra empty state con icono
+Top 5 empresas combina ranking ES + LATAM ordenado por inscripciones
+Últimas 10 inscripciones funden ambas tablas con normalización de fecha LATAM (STR_TO_DATE con doble formato %d/%m/%Y y %d/%m/%y)
+Country badges (verde España / azul LATAM) reutilizables en futuros módulos
+Empty states en todas las tablas y en el donut si el filtro deja datos vacíos
+Filtros prova y e.prova consistentes con el resto de módulos — los datos de prueba no se cuelan
+Cambios en archivos:
+
+DASHBOARD_EMPRESA/index.php — reescrito completo (~470 LOC)
+DASHBOARD_EMPRESA/assets/css/custom.css — añadidos 3 colores nuevos para KPIs (bg-dark-slate, bg-danger-red, bg-purple-soft), estilos .home-mini-table, .home-empty, .country-badge
+Verificado:
+
+✅ php -l pasa
+⏳ No he podido probarlo en navegador porque XAMPP está apagado
+Tu siguiente paso para validarlo:
+
+Arranca XAMPP (Apache + MySQL)
+Abre http://localhost/DASHBOARD_EMPRESA/index.php (o la ruta que uses)
+Prueba con ?anio=2026 en la URL para verificar que el filtro funciona
+Si hay algún problema visual o de SQL, dímelo y lo afino. Si todo se ve bien, ¿comiteamos esto y empezamos con el módulo de Finanzas?
